@@ -1,10 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./user/userSlice.js";
+import themeReducer from "./theme/themeSlice.js";
 import storage from "redux-persist/lib/storage";
-import {persistReducer, persistStore} from 'redux-persist'
+import { persistReducer, persistStore } from "redux-persist";
+import { theme } from "flowbite-react";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  theme: themeReducer,
 });
 
 const persistConfig = {
@@ -21,5 +24,4 @@ export const store = configureStore({
     getDefaultMiddleware({ serializableCheck: false }),
 });
 
-
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
