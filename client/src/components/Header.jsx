@@ -31,7 +31,7 @@ export default function Header() {
         <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
           <FaMoon className="self-center text-lg" />
         </Button>
-        <Link to="/sign-up">
+        <Link to="/sign-In">
           <Button gradientDuoTone="purpleToBlue" outline>Sign In</Button>
         </Link>
         <Navbar.Toggle/>
