@@ -78,3 +78,26 @@ export const destroy = async (req, res, next) => {
     next(error);
   }
 };
+
+export const update = async (req, res, next) => {
+  if (!req.user.isAdmin || req.user.id !== req.params.ownerId) {
+    return next(errorHandler(403, "You are not allowed to update this post"));
+  }
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.postId,
+      {
+        $set: {
+          title: req.body.title,
+          category: req.body.category,
+          image: req.body.image,
+          content: req.body.content,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    next(error);
+  }
+};
