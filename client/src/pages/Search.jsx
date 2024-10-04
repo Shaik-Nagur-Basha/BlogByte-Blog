@@ -129,7 +129,7 @@ export default function Search() {
   };
 
   return (
-    <div className="flex sm:flex-row flex-col">
+    <div className="flex sm:flex-row flex-col min-h-screen">
       {/* <div className=""> */}
       <form
         className="sm:border-r sm:border-b-0 border-b border-r-gray-500 border-b-gray-500 sm:w-[22rem] sm:h-auto p-6 flex flex-col gap-7 items-center"
@@ -194,7 +194,7 @@ export default function Search() {
           ) : (
             <>
               {posts && posts.length > 0 ? (
-                <div className="flex flex-wrap gap-4 sm:justify-center p-5">
+                <div className="flex flex-wrap gap-4 p-5">
                   {posts.map((post) => (
                     <PostCard key={post._id} post={post} />
                   ))}
