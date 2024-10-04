@@ -1,4 +1,4 @@
-import { Button, Spinner } from "flowbite-react";
+import { Alert, Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import CallToAction from "./CallToAction";
@@ -8,28 +8,29 @@ import PostCard from "../components/PostCard";
 export default function PostPage() {
   const { postSlug } = useParams();
   const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [post, setPost] = useState(null);
   const [recentPosts, setRecentPosts] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        setError(null);
         setLoading(true);
         const res = await fetch(`/api/post/getposts?slug=${postSlug}`);
         const data = await res.json();
         if (!res.ok) {
-          setError(true);
+          setError(data.message);
           setLoading(false);
           return;
         }
         if (res.ok) {
           setPost(data.posts[0]);
           setLoading(false);
-          setError(false);
+          setError(null);
         }
       } catch (error) {
-        setError(true);
+        setError(error.message);
         setLoading(false);
       }
     };
@@ -39,6 +40,7 @@ export default function PostPage() {
 
   useEffect(() => {
     try {
+      setError(null);
       const fetchRecentPosts = async () => {
         const res = await fetch("/api/post/getposts?limit=3");
         const data = await res.json();
@@ -48,6 +50,7 @@ export default function PostPage() {
       };
       fetchRecentPosts();
     } catch (error) {
+      setError(error.message);
       console.log(error.message);
     }
   }, []);
@@ -56,6 +59,15 @@ export default function PostPage() {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <Spinner className="xl" />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center">
+        <Alert color="failure" className="text-lg">
+          {error}
+        </Alert>
       </div>
     );
   return (

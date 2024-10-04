@@ -1,16 +1,19 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice.js";
 import { signoutSuccess } from "../redux/user/userSlice.js";
+import { useState } from "react";
 
 export default function Header() {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const handleSignout = async () => {
     try {
@@ -39,17 +42,27 @@ export default function Header() {
         </span>
         Blog
       </Link>
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          navigate(`/search?searchTerm=${searchTerm}`);
+        }}
+      >
         <TextInput
           type="text"
+          id="searchTerm"
+          defaultValue={searchTerm}
           placeholder="Search here ..."
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
-      <Button className="w-12 h-10 lg:hidden" color="gray" pill>
-        <AiOutlineSearch className="self-center text-lg" />
-      </Button>
+      <Link to={"/search"}>
+        <Button className="w-12 h-10 lg:hidden" color="gray" pill>
+          <AiOutlineSearch className="self-center text-lg" />
+        </Button>
+      </Link>
       <div className="flex gap-2 md:order-2">
         <Button
           className="w-12 h-10 hidden sm:inline"
