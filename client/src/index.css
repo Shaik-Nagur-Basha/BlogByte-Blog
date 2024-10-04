@@ -39,3 +39,21 @@ body {
 .dark .post-content a {
     color: red;
 }
+
+/* Home Page */
+.home>.calltoaction {
+    place-content: center;
+    /* gap: 10rem; */
+}
+
+@media (min-width: 1200px){
+    .home>.calltoaction {
+        gap: 10rem;
+    }
+}
+.home>.calltoaction {
+    margin: 0.75rem;
+    max-width: 100%;
+    padding: 0.75rem;
+    /* margin: 0; */
+}
