@@ -5,7 +5,7 @@ import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice.js";
 import { signoutSuccess } from "../redux/user/userSlice.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -14,6 +14,16 @@ export default function Header() {
   const { theme } = useSelector((state) => state.theme);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  // console.log(searchTerm);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
 
   const handleSignout = async () => {
     try {
@@ -31,6 +41,14 @@ export default function Header() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
+
   return (
     <Navbar className="border-b-2">
       <Link
@@ -42,16 +60,11 @@ export default function Header() {
         </span>
         Blog
       </Link>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          navigate(`/search?searchTerm=${searchTerm}`);
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <TextInput
           type="text"
           id="searchTerm"
-          defaultValue={searchTerm}
+          value={searchTerm}
           placeholder="Search here ..."
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"

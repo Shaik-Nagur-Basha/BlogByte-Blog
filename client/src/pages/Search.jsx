@@ -4,6 +4,11 @@ import PostCard from "../components/PostCard";
 import { useLocation } from "react-router-dom";
 
 export default function Search() {
+  // const [sidebarData, setSideBarData]=useState({
+  //   searchTerm:'',
+  //   sort: 'desc',
+  //   category: 'uncategorized'
+  // })
   const [posts, setPosts] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [loading, setLoading] = useState(false);
