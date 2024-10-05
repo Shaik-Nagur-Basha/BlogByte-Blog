@@ -11,7 +11,7 @@ import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   let [formData, setFormData] = useState({});
-  let {loading, error: errorMessage} = useSelector(state=> state.user)
+  let { loading, error: errorMessage } = useSelector((state) => state.user);
   let navigate = useNavigate();
   let dispatch = useDispatch();
 
@@ -51,13 +51,13 @@ export default function SignIn() {
         <div className="flex-1">
           <Link to="/" className="font-bold dark:text-white text-4xl">
             <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-              Freelancer
+              BlogByte
             </span>
             Blog
           </Link>
           <p className="text-sm mt-5">
-            This is Freelancer Blog, You can sign in with your email and
-            password or with Google.
+            This is BlogByte Blog, You can sign in with your email and password
+            or with Google.
           </p>
         </div>
         {/* right side */}

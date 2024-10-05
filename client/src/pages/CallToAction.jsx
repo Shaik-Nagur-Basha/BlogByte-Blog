@@ -15,7 +15,7 @@ export default function CallToAction() {
           className="rounded-tl-xl rounded-bl-none w-2/4 mt-5"
         >
           <a
-            href="https://www.interviewbit.com/"
+            href="https://www.javascript.com/"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -21,7 +21,7 @@ export default function Home() {
     <div className="">
       <div className="flex flex-col flex-nowrap gap-5 max-w-full md:p-28 p-5 my-7">
         <h1 className="text-3xl font-bold md:text-5xl">
-          Welcome to freelancer Blog
+          Welcome to BlogByte Blog
         </h1>
         <p className="text-xs md:text-sm text-gray-500">
           Here you'll find a variety of articles and tutorials on topics such as
