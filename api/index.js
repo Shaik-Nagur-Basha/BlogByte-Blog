@@ -10,8 +10,11 @@ import path from "path";
 
 dotenv.config();
 
-mongoose
-  .connect(process.env.MONGODB_URL)
+async function main() {
+  await mongoose.connect(process.env.MONGODB_URL);
+}
+
+main()
   .then(() => {
     console.log("MongoDB is Connected");
   })
