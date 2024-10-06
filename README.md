@@ -6,7 +6,7 @@
 
 Check out the `live demo` of `BlogByte Blog`: [Live Demo](https://blogbyte-blog.onrender.com)
 
-Here are some screenshots of `Admin Pages`: [Click here](https://github.com/Shaik-Nagur-Basha/BlogByte-Blog/edit/main/README.md#screenshots)
+Here are some screenshots of `Admin Pages`: [Click here](https://github.com/Shaik-Nagur-Basha/BlogByte-Blog/tree/main/README.md#screenshots)
 
 ## Features
 
