@@ -47,7 +47,7 @@ Here are some screenshots of `Admin Pages`: [Click here](https://github.com/Shai
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/blogbyte-blog.git
+   git clone https://github.com/Shaik-Nagur-Basha/blogbyte-blog.git
    ```
 
 2. **Install server dependencies**:
