@@ -1,33 +1,80 @@
 import { Button, Label, Select, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Search() {
-  // const [sidebarData, setSideBarData]=useState({
-  //   searchTerm:'',
-  //   sort: 'desc',
-  //   category: 'uncategorized'
-  // })
   const [posts, setPosts] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
+  const [searchTerm, setSearchTerm] = useState("")
   const location = useLocation();
-  const [search, setSearch] = useState("");
   //   console.log(formData);
+  const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const res = await fetch(
+  //         `/api/post/getposts?category=${categoryFromUrl}`
+  //       );
+  //       const data = await res.json();
+  //       if (res.ok) {
+  //         setPosts(data.posts);
+  //         if (data.posts.length < 9) {
+  //           setShowMore(false);
+  //         }
+  //       }
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.log(error.message);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   if (categoryFromUrl) {
+  //     fetchPosts();
+  //   }
+  // }, [categoryFromUrl]);
+
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const res = await fetch(
+  //         `/api/post/getposts?order=${orderFromUrl}`
+  //       );
+  //       const data = await res.json();
+  //       if (res.ok) {
+  //         setPosts(data.posts);
+  //         if (data.posts.length < 9) {
+  //           setShowMore(false);
+  //         }
+  //       }
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.log(error.message);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   if (categoryFromUrl) {
+  //     fetchPosts();
+  //   }
+  // }, [orderFromUrl]);
   const urlParams = new URLSearchParams(location.search);
-  const searchTermFromUrl = urlParams.get("searchTerm");
-  const categoryFromUrl = urlParams.get("category");
 
   useEffect(() => {
     const fetchPosts = async () => {
+      const urlParams = new URLSearchParams(location.search);
+      const searchTermFromUrl = urlParams.get("searchTerm");
+      if (searchTermFromUrl) {
+        setSearchTerm(searchTermFromUrl);
+      }
+      const searchQuery = urlParams.toString();
       setLoading(true);
       try {
-        const res = await fetch(
-          `/api/post/getposts?category=${categoryFromUrl}`
-        );
+        const res = await fetch(`/api/post/getposts?${searchQuery}`);
         const data = await res.json();
         if (res.ok) {
           setPosts(data.posts);
@@ -41,59 +88,8 @@ export default function Search() {
         setLoading(false);
       }
     };
-    if (categoryFromUrl) {
-      fetchPosts();
-    }
-  }, [categoryFromUrl]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setSearch(searchTermFromUrl);
-      setLoading(true);
-      try {
-        const res = await fetch(
-          `/api/post/getposts?searchTerm=${searchTermFromUrl}`
-        );
-        const data = await res.json();
-        if (res.ok) {
-          setPosts(data.posts);
-          if (data.posts.length < 9) {
-            setShowMore(false);
-          }
-        }
-        setLoading(false);
-      } catch (error) {
-        console.log(error.message);
-        setLoading(false);
-      }
-    };
-    if (searchTermFromUrl) {
-      fetchPosts();
-    }
-  }, [searchTermFromUrl]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch("/api/post/getposts");
-        const data = await res.json();
-        if (res.ok) {
-          setPosts(data.posts);
-          if (data.posts.length < 9) {
-            setShowMore(false);
-          }
-        }
-        setLoading(false);
-      } catch (error) {
-        console.log(error.message);
-        setLoading(false);
-      }
-    };
-    if (searchTermFromUrl === null && categoryFromUrl === null) {
-      fetchPosts();
-    }
-  }, []);
+    fetchPosts();
+  }, [location.search]);
 
   const handleShowMore = async () => {
     const startIndex = posts.length;
@@ -116,17 +112,22 @@ export default function Search() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      const res = await fetch(
-        `/api/post/getposts?searchTerm=${
-          formData.searchTerm ? formData.searchTerm : ""
-        }&order=${formData.order ? formData.order : ""}&category=${
-          formData.category ? formData.category : ""
-        }`
-      );
-      const data = await res.json();
-      setPosts([...data.posts]);
-      setLoading(false);
+      formData.searchTerm
+        ? urlParams.set("searchTerm", formData.searchTerm.trim())
+        : urlParams.delete("searchTerm");
+      formData.order
+        ? urlParams.set("order", formData.order)
+        : urlParams.delete("order");
+      formData.category
+        ? urlParams.set("category", formData.category)
+        : urlParams.delete("category");
+      const searchQuery = urlParams.toString();
+      // setLoading(true);
+      // const res = await fetch(`/api/post/getposts?${searchQuery}`);
+      // const data = await res.json();
+      navigate(`/search?${searchQuery}`);
+      // setPosts([...data.posts]);
+      // setLoading(false);
     } catch (error) {
       console.log(error.message);
       setLoading(false);
@@ -145,7 +146,7 @@ export default function Search() {
           <TextInput
             type="text"
             id="searchTerm"
-            defaultValue={search}
+            defaultValue={searchTerm}
             placeholder="Search..."
             className="sm:w-20 md:w-24 lg:w-28 xl:w-32"
             onChange={(e) =>
@@ -159,7 +160,7 @@ export default function Search() {
             onChange={(e) =>
               setFormData({ ...formData, order: e.target.value })
             }
-            defaultValue={formData.order}
+            defaultValue={urlParams.get("order")}
           >
             <option value="desc">Latest</option>
             <option value="asc">Oldest</option>
@@ -171,7 +172,7 @@ export default function Search() {
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
             }
-            defaultValue={categoryFromUrl}
+            defaultValue={urlParams.get("category")}
           >
             <option value="uncategorized">Uncategorized</option>
             <option value="javascript">JavaScript</option>
@@ -199,25 +200,27 @@ export default function Search() {
           ) : (
             <>
               {posts && posts.length > 0 ? (
-                <div className="flex flex-wrap gap-4 p-5">
-                  {posts.map((post) => (
-                    <PostCard key={post._id} post={post} />
-                  ))}
-                </div>
+                <>
+                  <div className="flex flex-wrap gap-4 p-5">
+                    {posts.map((post) => (
+                      <PostCard key={post._id} post={post} />
+                    ))}
+                  </div>
+                  {showMore && (
+                    <button
+                      onClick={handleShowMore}
+                      className="w-full text-teal-500 self-center text-sm py-7"
+                    >
+                      Show more
+                    </button>
+                  )}
+                </>
               ) : (
                 <p className="text-xl text-gray-500 m-7">No posts found.</p>
               )}
             </>
           )}
         </div>
-        {showMore && (
-          <button
-            onClick={handleShowMore}
-            className="w-full text-teal-500 self-center text-sm py-7"
-          >
-            Show more
-          </button>
-        )}
       </div>
     </div>
   );

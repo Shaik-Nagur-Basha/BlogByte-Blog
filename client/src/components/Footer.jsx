@@ -10,7 +10,10 @@ import {
 
 export default function FooterCom() {
   return (
-    <Footer container className="border border-t-8 border-teal-500">
+    <Footer
+      container
+      className="border border-t-8 border-teal-500 sticky top-full left-0 right-0"
+    >
       <div className="w-full max-w-7xl mx-auto">
         <div className="grid w-full justify-between sm:flex md:grid-cols-1">
           <div className="mt-5">
@@ -35,11 +38,7 @@ export default function FooterCom() {
                 >
                   My First Project
                 </Footer.Link>
-                <Footer.Link
-                  href="/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Footer.Link href="/" target="_blank" rel="noopener noreferrer">
                   BlogByte Blog
                 </Footer.Link>
               </Footer.LinkGroup>
@@ -84,8 +83,18 @@ export default function FooterCom() {
             year={new Date().getFullYear()}
           />
           <div className="flex gap-6 mt-4 sm:mt-0 sm:justify-center">
-            <Footer.Icon href="#" icon={BsGithub} />
-            <Footer.Icon href="#" icon={BsTelegram} />
+            <Footer.Icon
+              href="https://github.com/Shaik-Nagur-Basha"
+              target="_blank"
+              rel="noopener noreferrer"
+              icon={BsGithub}
+            />
+            <Footer.Icon
+              href="https://t.me/sknba"
+              target="_blank"
+              rel="noopener noreferrer"
+              icon={BsTelegram}
+            />
             <Footer.Icon href="#" icon={BsFacebook} />
             <Footer.Icon href="#" icon={BsTwitter} />
             <Footer.Icon href="#" icon={BsInstagram} />

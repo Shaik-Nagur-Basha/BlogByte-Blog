@@ -1,4 +1,4 @@
-import { Button, Modal, Table } from "flowbite-react";
+import { Button, Modal, Spinner, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
@@ -10,11 +10,14 @@ export default function DashUsers() {
   const [showMore, setShowMore] = useState(true);
   const [showModel, setShowModel] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState("");
+  const [usersLoading, setUsersLoading] = useState(null);
 
   // console.log(users);
 
   useEffect(() => {
+    setUsersLoading(null);
     const fetchUsers = async () => {
+      setUsersLoading(true);
       try {
         const res = await fetch(`/api/user/getusers`);
         const data = await res.json();
@@ -25,9 +28,11 @@ export default function DashUsers() {
           if (data.users.length < 9) {
             setShowMore(false);
           }
+          setUsersLoading(false);
         }
       } catch (error) {
         console.log(error.message);
+        setUsersLoading(false);
       }
     };
     if (currentUser.isAdmin) {
@@ -70,99 +75,110 @@ export default function DashUsers() {
     }
   };
   return (
-    <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-      {currentUser.isAdmin && users.length > 0 ? (
-        <>
-          <Table hoverable className="shadow-md">
-            <Table.Head>
-              <Table.HeadCell>Date created</Table.HeadCell>
-              <Table.HeadCell>User image</Table.HeadCell>
-              <Table.HeadCell>Username</Table.HeadCell>
-              <Table.HeadCell>Email</Table.HeadCell>
-              <Table.HeadCell>Admin</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
-            </Table.Head>
-            {users.map((user) => (
-              //"key" is for Warning Handling in "Console"
-              <Table.Body key={user._id} className="divide-y">
-                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <img
-                      src={user.profilePicture}
-                      alt={user.username}
-                      className="w-10 h-10 object-cover bg-gray-500 rounded-full"
-                    />
-                  </Table.Cell>
-                  <Table.Cell>
-                    {/* <Link
+    <>
+      {!usersLoading ? (
+        <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+          {currentUser && currentUser.isAdmin && users.length > 0 ? (
+            <>
+              <Table
+                hoverable
+                className="shadow-sm shadow-black dark:shadow-white rounded-md"
+              >
+                <Table.Head>
+                  <Table.HeadCell>Date created</Table.HeadCell>
+                  <Table.HeadCell>User image</Table.HeadCell>
+                  <Table.HeadCell>Username</Table.HeadCell>
+                  <Table.HeadCell>Email</Table.HeadCell>
+                  <Table.HeadCell>Admin</Table.HeadCell>
+                  <Table.HeadCell>Delete</Table.HeadCell>
+                </Table.Head>
+                {users.map((user) => (
+                  //"key" is for Warning Handling in "Console"
+                  <Table.Body key={user._id} className="divide-y">
+                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                      <Table.Cell>
+                        {new Date(user.createdAt).toLocaleDateString()}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <img
+                          src={user.profilePicture}
+                          alt={user.username}
+                          className="w-10 h-10 object-cover bg-gray-500 rounded-full"
+                        />
+                      </Table.Cell>
+                      <Table.Cell>
+                        {/* <Link
                       className="font-medium text-gray-900 dark:text-white"
                       to={`/user/${post.slug}`}
                     > */}
-                    {user.username}
-                    {/* </Link> */}
-                  </Table.Cell>
-                  <Table.Cell>{user.email}</Table.Cell>
-                  <Table.Cell>
-                    {user.isAdmin ? (
-                      <FaCheck className="text-green-500" />
-                    ) : (
-                      <FaTimes className="text-red-500" />
-                    )}
-                  </Table.Cell>
-                  <Table.Cell>
-                    <span
-                      onClick={() => {
-                        setShowModel(true);
-                        setUserIdToDelete(user._id);
-                      }}
-                      className="font-medium text-red-500 hover:underline cursor-pointer"
-                    >
-                      Delete
-                    </span>
-                  </Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            ))}
-          </Table>
-          {showMore && (
-            <button
-              onClick={handleShowMore}
-              className="w-full text-teal-500 self-center text-sm py-7"
-            >
-              Show more
-            </button>
+                        {user.username}
+                        {/* </Link> */}
+                      </Table.Cell>
+                      <Table.Cell>{user.email}</Table.Cell>
+                      <Table.Cell>
+                        {user.isAdmin ? (
+                          <FaCheck className="text-green-500" />
+                        ) : (
+                          <FaTimes className="text-red-500" />
+                        )}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <span
+                          onClick={() => {
+                            setShowModel(true);
+                            setUserIdToDelete(user._id);
+                          }}
+                          className="font-medium text-red-500 hover:underline cursor-pointer"
+                        >
+                          Delete
+                        </span>
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                ))}
+              </Table>
+              {showMore && (
+                <button
+                  onClick={handleShowMore}
+                  className="w-full text-teal-500 self-center text-sm py-7"
+                >
+                  Show more
+                </button>
+              )}
+            </>
+          ) : (
+            <p>You have no users yet!</p>
           )}
-        </>
+          <Modal
+            show={showModel}
+            onClick={() => setShowModel(false)}
+            popup
+            size="md"
+          >
+            <Modal.Header />
+            <Modal.Body>
+              <div className="text-center">
+                <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+                <div className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+                  Are you sure you want to delete this user?
+                </div>
+                <div className="flex justify-center gap-4">
+                  <Button color="failure" onClick={handleDeleteUser}>
+                    Yes, I'm sure
+                  </Button>
+                  <Button color="gray" onClick={() => setShowModel(false)}>
+                    No, cancel
+                  </Button>
+                </div>
+              </div>
+            </Modal.Body>
+          </Modal>
+        </div>
       ) : (
-        <p>You have not users yet!</p>
+        <div className="m-auto">
+          <Spinner className="size-12" />
+        </div>
       )}
-      <Modal
-        show={showModel}
-        onClick={() => setShowModel(false)}
-        popup
-        size="md"
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-            <div className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete this user?
-            </div>
-            <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={handleDeleteUser}>
-                Yes, I'm sure
-              </Button>
-              <Button color="gray" onClick={() => setShowModel(false)}>
-                No, cancel
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
-    </div>
+    </>
   );
 }

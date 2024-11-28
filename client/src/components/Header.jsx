@@ -44,13 +44,13 @@ export default function Header() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set("searchTerm", searchTerm);
+    urlParams.set("searchTerm", searchTerm.trim());
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
 
   return (
-    <Navbar className="border-b-2">
+    <Navbar className="border-b-2 sticky top-0 right-0 left-0 z-50">
       <Link
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
@@ -69,24 +69,29 @@ export default function Header() {
           rightIcon={AiOutlineSearch}
           className="hidden lg:inline"
           onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            borderRadius:"1.5rem",
+            paddingLeft:"1.5rem",
+            paddingRight:"2.5rem"
+          }}
         />
       </form>
       <Link to={"/search"}>
-        <Button className="w-12 h-10 lg:hidden" color="gray" pill>
+        <Button className="w-10 h-10 lg:hidden rounded-full" color="gray" pill>
           <AiOutlineSearch className="self-center text-lg" />
         </Button>
       </Link>
       <div className="flex gap-2 md:order-2">
         <Button
-          className="w-12 h-10 hidden sm:inline"
+          className="w-10 h-10 rounded-full"
           color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
         >
           {theme === "light" ? (
-            <FaSun style={{ scale: "1.35" }} />
+            <FaSun className="self-center" />
           ) : (
-            <FaMoon style={{ scale: "1.35" }} />
+            <FaMoon className="self-center" />
           )}
         </Button>
         {currentUser ? (
