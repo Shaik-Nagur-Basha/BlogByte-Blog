@@ -31,7 +31,7 @@ export default function UpdatePost() {
         const data = await res.json();
         // console.log(data);
         if (!res.ok) {
-          console.log(data.message);
+          // console.log(data.message);
           setPublishError(data.message);
           return;
         }
@@ -91,15 +91,14 @@ export default function UpdatePost() {
     try {
       // console.log(formData);
       setPublishError(null);
-      const res = await fetch(
-        `/api/post/update/${formData._id}/${currentUser._id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`/api/post/update/${postId}/${currentUser._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
       const data = await res.json();
+      // console.log(data);
+
       if (!res.ok) {
         return setPublishError(data.message);
       }
@@ -113,7 +112,7 @@ export default function UpdatePost() {
   };
 
   return (
-    <div className="p-3 max-w-3xl mx-auto min-h-screen">
+    <div className="p-3 max-w-3xl mx-auto my-20">
       <h1 className="text-center text-3xl my-7 font-semibold">Update post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
@@ -147,6 +146,7 @@ export default function UpdatePost() {
             type="file"
             accept="image/*"
             onChange={(e) => setFile(e.target.files[0])}
+            className="shadow-sm shadow-black dark:shadow-white rounded-lg"
           />
 
           <Button
@@ -156,6 +156,7 @@ export default function UpdatePost() {
             outline
             onClick={handleImageUpload}
             disabled={imageFileUploadProgress}
+            className="shadow-sm shadow-black dark:shadow-white"
           >
             {/* {imageFileUploadProgress && imageFileUploadProgress < 100 ? <></>:<></>} */}
             {imageFileUploadProgress ? (
@@ -188,7 +189,7 @@ export default function UpdatePost() {
           <img
             src={formData.image}
             alt="uploaded image"
-            className="w-full h-72 object-cover"
+            className="w-full h-72 object-cover shadow-sm shadow-black dark:shadow-white rounded-md"
           />
         )}
         <ReactQuill
@@ -200,7 +201,11 @@ export default function UpdatePost() {
           // disabled={imageFileUploadProgress && imageFileUploadProgress < 100}  //"Not Work's"
           onChange={(value) => setFormData({ ...formData, content: value })}
         />
-        <Button type="submit" gradientDuoTone="purpleToPink">
+        <Button
+          type="submit"
+          gradientDuoTone="purpleToPink"
+          className="shadow-sm shadow-black dark:shadow-white"
+        >
           Update post
         </Button>
         {publishError && (
