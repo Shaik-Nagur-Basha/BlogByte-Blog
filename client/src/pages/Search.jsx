@@ -148,10 +148,15 @@ export default function Search() {
             id="searchTerm"
             defaultValue={searchTerm}
             placeholder="Search..."
-            className="sm:w-20 md:w-24 lg:w-28 xl:w-32"
+            className="sm:w-20 md:w-24 lg:w-28 xl:w-32 shadow-sm shadow-black dark:shadow-white rounded-full"
             onChange={(e) =>
               setFormData({ ...formData, searchTerm: e.target.value })
             }
+            style={{
+              borderRadius:"1.5rem",
+              paddingLeft:"1rem",
+              paddingRight:"1rem"
+            }}
           />
         </div>
         <div className="flex gap-3 items-center">
@@ -161,6 +166,9 @@ export default function Search() {
               setFormData({ ...formData, order: e.target.value })
             }
             defaultValue={urlParams.get("order")}
+            style={{
+              borderRadius:"1.5rem",
+            }}
           >
             <option value="desc">Latest</option>
             <option value="asc">Oldest</option>
@@ -173,6 +181,9 @@ export default function Search() {
               setFormData({ ...formData, category: e.target.value })
             }
             defaultValue={urlParams.get("category")}
+            style={{
+              borderRadius:"1.5rem",
+            }}
           >
             <option value="uncategorized">Uncategorized</option>
             <option value="javascript">JavaScript</option>
@@ -184,7 +195,7 @@ export default function Search() {
           type="submit"
           gradientDuoTone="purpleToPink"
           outline
-          className="w-fit"
+          className="w-fit shadow-sm shadow-black dark:shadow-white rounded-md"
         >
           Apply Filters
         </Button>

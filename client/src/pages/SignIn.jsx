@@ -45,7 +45,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen mt-20">
+    <div className="my-20">
       <div className="flex p-13 w-4/5 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
         {/* left side */}
         <div className="flex-1">
@@ -84,7 +84,7 @@ export default function SignIn() {
             <Button
               gradientDuoTone="purpleToPink"
               type="submit"
-              disabled={loading}
+              disabled={loading} className="shadow-sm shadow-black dark:shadow-white"
             >
               {loading ? (
                 <>

@@ -2,19 +2,25 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CallToAction from "./CallToAction";
 import PostCard from "../components/PostCard";
+import { Spinner } from "flowbite-react";
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [postsLoading, setPostsLoading] = useState(false);
   useEffect(() => {
+    // setPostsLoading(null);
     try {
+      // setPostsLoading(true);
       const fetchPosts = async () => {
         const res = await fetch("/api/post/getPosts");
         const data = await res.json();
         setPosts(data.posts);
+        setPostsLoading(true);
       };
       fetchPosts();
     } catch (error) {
       console.log(error.message);
+      setPostsLoading(true);
     }
   }, []);
   return (
@@ -40,18 +46,26 @@ export default function Home() {
       <div className="my-12">
         <h2 className="text-2xl font-bold text-center mb-5">Recent Posts</h2>
         <div className="flex flex-wrap lg:gap-10 gap-4 justify-center p-4">
-          {posts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
+          {postsLoading ? (
+            posts.length ? (
+              posts.map((post) => <PostCard key={post._id} post={post} />)
+            ) : (
+              <p className="text-red-600">No Recent posts yet!</p>
+            )
+          ) : (
+            <Spinner />
+          )}
         </div>
-        <div className="flex justify-center items-center mt-4">
-          <Link
-            to={"/search"}
-            className="text-teal-500 hover:underline font-bold w-fit"
-          >
-            View all posts
-          </Link>
-        </div>
+        {posts && posts.length && (
+          <div className="flex justify-center items-center mt-4">
+            <Link
+              to={"/search"}
+              className="text-teal-500 hover:underline font-bold w-fit"
+            >
+              View all posts
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

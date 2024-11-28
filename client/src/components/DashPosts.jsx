@@ -10,14 +10,12 @@ export default function DashPosts() {
   const [showMore, setShowMore] = useState(true);
   const [showModel, setShowModel] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
-  const [postsLoading, setPostsLoading] = useState(null);
+  const [postsLoading, setPostsLoading] = useState(false);
 
   // console.log(userPosts);
 
   useEffect(() => {
-    setPostsLoading(null);
     const fetchPosts = async () => {
-      setPostsLoading(true);
       try {
         const res = await fetch(
           `/api/post/getposts?ownerId=${currentUser._id}`
@@ -28,11 +26,11 @@ export default function DashPosts() {
           if (data.posts.length < 9) {
             setShowMore(false);
           }
-          setPostsLoading(false);
+          setPostsLoading(true);
         }
       } catch (error) {
         console.log(error.message);
-        setPostsLoading(false);
+        setPostsLoading(true);
       }
     };
     if (currentUser.isAdmin) {
@@ -83,9 +81,9 @@ export default function DashPosts() {
   };
   return (
     <>
-      {!postsLoading ? (
+      {postsLoading ? (
         <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-          {currentUser && currentUser.isAdmin && userPosts.length > 0 ? (
+          {currentUser && currentUser.isAdmin && userPosts.length ? (
             <>
               <Table hoverable className="shadow-sm shadow-black dark:shadow-white rounded-md">
                 <Table.Head>

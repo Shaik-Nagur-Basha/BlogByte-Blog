@@ -22,41 +22,35 @@ export default function DashboardCom() {
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalPosts, setTotalPosts] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
-  const [usersLoading, setUsersLoading] = useState(null);
-  const [postsLoading, setPostsLoading] = useState(null);
-  const [commentsLoading, setCommentsLoading] = useState(null);
+  const [usersLoading, setUsersLoading] = useState(false);
+  const [postsLoading, setPostsLoading] = useState(false);
+  const [commentsLoading, setCommentsLoading] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
-    setUsersLoading(null);
-    setPostsLoading(null);
-    setCommentsLoading(null);
     const fetchUsers = async () => {
-      setUsersLoading(true);
       const res = await fetch("/api/user/getusers?limit=5");
       const data = await res.json();
       setUsers([...data.users]);
       setLastMonthUsers(data.lastMonthUsers);
       setTotalUsers(data.totalUsers);
-      setUsersLoading(false);
+      setUsersLoading(true);
     };
     const fetchPosts = async () => {
-      setPostsLoading(true);
       const res = await fetch("/api/post/getposts?limit=5");
       const data = await res.json();
       setPosts([...data.posts]);
       setLastMonthPosts(data.lastMonthPosts);
       setTotalPosts(data.totalPosts);
-      setPostsLoading(false);
+      setPostsLoading(true);
     };
     const fetchComments = async () => {
-      setCommentsLoading(true);
       const res = await fetch("/api/comment/getcomments?limit=5");
       const data = await res.json();
       setComments([...data.comments]);
       setLastMonthComments(data.lastMonthComments);
       setTotalComments(data.totalComments);
-      setCommentsLoading(false);
+      setCommentsLoading(true);
     };
     if (currentUser.isAdmin) {
       fetchUsers();
@@ -73,7 +67,7 @@ export default function DashboardCom() {
             <div className="">
               <h1 className="uppercase text-gray-400">Total Users</h1>
               <span className="text-2xl">
-                {!usersLoading ? totalUsers : <Spinner />}
+                {usersLoading ? totalUsers : <Spinner />}
               </span>
             </div>
             <HiOutlineUserGroup className="bg-teal-500 rounded-full text-4xl p-2" />
@@ -81,7 +75,7 @@ export default function DashboardCom() {
           <div className="flex items-center text-gray-400 mt-2">
             <HiArrowUp className="text-cyan-500" />
             <span className="text-cyan-500">
-              {!usersLoading ? lastMonthUsers : <Spinner className="size-4" />}
+              {usersLoading ? lastMonthUsers : <Spinner className="size-4" />}
             </span>
             &nbsp;&nbsp;
             <span className="text-sm text-gray-500">Last month</span>
@@ -92,7 +86,7 @@ export default function DashboardCom() {
             <div className="">
               <h1 className="uppercase text-gray-400">Total Comments</h1>
               <span className="text-2xl">
-                {!commentsLoading ? totalComments : <Spinner />}
+                {commentsLoading ? totalComments : <Spinner />}
               </span>
             </div>
             <HiAnnotation className="bg-blue-500 rounded-full text-4xl p-2" />
@@ -100,7 +94,7 @@ export default function DashboardCom() {
           <div className="flex items-center text-gray-400 mt-2">
             <HiArrowUp className="text-cyan-500" />
             <span className="text-cyan-500">
-              {!commentsLoading ? lastMonthComments : <Spinner className="size-4" />}
+              {commentsLoading ? lastMonthComments : <Spinner className="size-4" />}
             </span>
             &nbsp;&nbsp;
             <span className="text-sm text-gray-500">Last month</span>
@@ -111,7 +105,7 @@ export default function DashboardCom() {
             <div className="">
               <h1 className="uppercase text-gray-400">Total Posts</h1>
               <span className="text-2xl">
-                {!postsLoading ? totalPosts : <Spinner />}
+                {postsLoading ? totalPosts : <Spinner />}
               </span>
             </div>
             <HiDocumentText className="bg-green-500 rounded-full text-4xl p-2" />
@@ -119,7 +113,7 @@ export default function DashboardCom() {
           <div className="flex items-center text-gray-400 mt-2">
             <HiArrowUp className="text-cyan-500" />
             <span className="text-cyan-500">
-              {!postsLoading ? lastMonthPosts : <Spinner className="size-4" />}
+              {postsLoading ? lastMonthPosts : <Spinner className="size-4" />}
             </span>
             &nbsp;&nbsp;
             <span className="text-sm text-gray-500">Last month</span>
@@ -131,7 +125,7 @@ export default function DashboardCom() {
           <div className="flex justify-between items-center">
             <h2 className="text-gray-600 dark:text-gray-300">Recent Users</h2>
             <Link to={"/dashboard?tab=users"}>
-              <Button gradientDuoTone="purpleToPink" outline>
+              <Button gradientDuoTone="purpleToPink" outline className="shadow-sm shadow-black dark:shadow-white">
                 See all
               </Button>
             </Link>
@@ -142,7 +136,7 @@ export default function DashboardCom() {
               <Table.HeadCell>Username</Table.HeadCell>
             </Table.Head>
             <Table.Body>
-              {!usersLoading ? (
+              {usersLoading ? (
                 users.length > 0 ? (
                   users.map((user) => (
                     <Table.Row key={user._id}>
@@ -175,7 +169,7 @@ export default function DashboardCom() {
               Recent Comments
             </h2>
             <Link to={"/dashboard?tab=comments"}>
-              <Button gradientDuoTone="purpleToPink" outline>
+              <Button gradientDuoTone="purpleToPink" outline className="shadow-sm shadow-black dark:shadow-white">
                 See all
               </Button>
             </Link>
@@ -186,7 +180,7 @@ export default function DashboardCom() {
               <Table.HeadCell>Likes</Table.HeadCell>
             </Table.Head>
             <Table.Body>
-              {!commentsLoading ? (
+              {commentsLoading ? (
                 comments.length > 0 ? (
                   comments.map((comment) => (
                     <Table.Row key={comment._id}>
@@ -213,7 +207,7 @@ export default function DashboardCom() {
           <div className="flex justify-between items-center">
             <h2 className="text-gray-600 dark:text-gray-300">Recent posts</h2>
             <Link to={"/dashboard?tab=posts"}>
-              <Button gradientDuoTone="purpleToPink" outline>
+              <Button gradientDuoTone="purpleToPink" outline className="shadow-sm shadow-black dark:shadow-white">
                 See all
               </Button>
             </Link>
@@ -225,7 +219,7 @@ export default function DashboardCom() {
               <Table.HeadCell>Category</Table.HeadCell>
             </Table.Head>
             <Table.Body>
-              {!postsLoading ? (
+              {postsLoading ? (
                 posts.length > 0 ? (
                   posts.map((post) => (
                     <Table.Row key={post._id}>

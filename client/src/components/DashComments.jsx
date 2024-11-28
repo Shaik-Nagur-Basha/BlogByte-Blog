@@ -10,14 +10,12 @@ export default function DashComments() {
   const [showMore, setShowMore] = useState(true);
   const [showModel, setShowModel] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState("");
-  const [commentsLoading, setCommentsLoading] = useState(null);
+  const [commentsLoading, setCommentsLoading] = useState(false);
 
   // console.log(comments);
 
   useEffect(() => {
-    setCommentsLoading(null)
     const fetchComments = async () => {
-      setCommentsLoading(true);
       try {
         const res = await fetch(`/api/comment/getcomments`);
         const data = await res.json();
@@ -28,11 +26,11 @@ export default function DashComments() {
           if (data.comments.length < 9) {
             setShowMore(false);
           }
-          setCommentsLoading(false)
+          setCommentsLoading(true)
         }
       } catch (error) {
         console.log(error.message);
-        setCommentsLoading(false)
+        setCommentsLoading(true)
       }
     };
     if (currentUser.isAdmin) {
@@ -81,7 +79,7 @@ export default function DashComments() {
   };
   return (
     <>
-      {!commentsLoading ? (
+      {commentsLoading ? (
         <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 ">
           {currentUser && currentUser.isAdmin && comments.length > 0 ? (
             <>

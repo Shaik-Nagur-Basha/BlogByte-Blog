@@ -118,7 +118,7 @@ export default function CommentSection({ postId }) {
         <div className="flex items-center gap-1 my-5 text-gray-500 text-sm">
           <p>Signed in as:</p>
           <img
-            className="h-5 w-5 object-cover rounded-full"
+            className="h-5 w-5 object-cover rounded-full shadow-sm shadow-black dark:shadow-white"
             src={currentUser.profilePicture}
             alt=""
           />
@@ -139,7 +139,7 @@ export default function CommentSection({ postId }) {
       )}
       {currentUser && (
         <form
-          className="border border-teal-500 rounded-md p-3"
+          className="border border-teal-500 rounded-md p-3 shadow-sm shadow-black dark:shadow-white"
           onSubmit={handleSubmit}
         >
           <Textarea
@@ -153,7 +153,7 @@ export default function CommentSection({ postId }) {
             <p className="text-gray-500 text-sm">
               {200 - comment.length} characters remaining
             </p>
-            <Button gradientDuoTone="purpleToBlue" outline type="submit">
+            <Button gradientDuoTone="purpleToBlue" outline type="submit" className="shadow-sm shadow-black dark:shadow-white">
               Submit
             </Button>
           </div>
@@ -165,12 +165,12 @@ export default function CommentSection({ postId }) {
         </form>
       )}
       {comments.length === 0 ? (
-        <p className="text-sm my-5">No comments yet!</p>
+        <p className="text-sm my-5 text-red-600">No comments yet!</p>
       ) : (
         <>
           <div className="text-sm my-5 flex items-center gap-1">
-            <p>Comments</p>
-            <div className="border border-gray-400 py-1 px-2 rounded-sm">
+            <p className="mr-2">Comments</p>
+            <div className="border border-gray-400 py-1 px-2 rounded-md shadow-sm shadow-black dark:shadow-white">
               <p>{comments.length}</p>
             </div>
           </div>

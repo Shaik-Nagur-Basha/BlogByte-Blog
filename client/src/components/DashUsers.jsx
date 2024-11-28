@@ -10,14 +10,12 @@ export default function DashUsers() {
   const [showMore, setShowMore] = useState(true);
   const [showModel, setShowModel] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState("");
-  const [usersLoading, setUsersLoading] = useState(null);
+  const [usersLoading, setUsersLoading] = useState(false);
 
   // console.log(users);
 
   useEffect(() => {
-    setUsersLoading(null);
     const fetchUsers = async () => {
-      setUsersLoading(true);
       try {
         const res = await fetch(`/api/user/getusers`);
         const data = await res.json();
@@ -28,11 +26,11 @@ export default function DashUsers() {
           if (data.users.length < 9) {
             setShowMore(false);
           }
-          setUsersLoading(false);
+          setUsersLoading(true);
         }
       } catch (error) {
         console.log(error.message);
-        setUsersLoading(false);
+        setUsersLoading(true);
       }
     };
     if (currentUser.isAdmin) {
@@ -76,9 +74,9 @@ export default function DashUsers() {
   };
   return (
     <>
-      {!usersLoading ? (
+      {usersLoading ? (
         <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-          {currentUser && currentUser.isAdmin && users.length > 0 ? (
+          {currentUser && currentUser.isAdmin && users.length ? (
             <>
               <Table
                 hoverable
@@ -147,7 +145,9 @@ export default function DashUsers() {
               )}
             </>
           ) : (
-            <p>You have no users yet!</p>
+            <p className="text-red-500 mt-5 translate-x-1/2">
+              You have no users yet!
+            </p>
           )}
           <Modal
             show={showModel}

@@ -51,7 +51,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
     <div className="flex p-4 border-b dark:border-gray-600 text-sm">
       <div className="flex-shrink-0 mr-3">
         <img
-          className="w-10 h-10 rounded-full bg-gray-200"
+          className="w-10 h-10 rounded-full bg-gray-200 shadow-sm shadow-black dark:shadow-white"
           src={user.profilePicture}
           alt={user.username}
         />
@@ -76,8 +76,8 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
               <Button
                 type="button"
                 size="sm"
-                gradientDuoTone="purpleToBlue"
-                onClick={handleSave}
+                gradientDuoTone="pinkToOrange"
+                onClick={handleSave} className="shadow-sm shadow-black dark:shadow-white"
               >
                 Save
               </Button>
@@ -86,7 +86,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
                 size="sm"
                 gradientDuoTone="purpleToBlue"
                 outline
-                onClick={() => setIsEditing(false)}
+                onClick={() => setIsEditing(false)} className="shadow-sm shadow-black dark:shadow-white"
               >
                 Cancel
               </Button>

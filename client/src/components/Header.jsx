@@ -50,7 +50,7 @@ export default function Header() {
   };
 
   return (
-    <Navbar className="border-b-2 sticky top-0 right-0 left-0 z-50">
+    <Navbar className="border-b-2 sticky top-0 right-0 left-0 z-50 shadow-sm shadow-black dark:shadow-white">
       <Link
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
@@ -60,7 +60,10 @@ export default function Header() {
         </span>
         &nbsp;Blog
       </Link>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className="shadow-sm shadow-black dark:shadow-white rounded-full"
+      >
         <TextInput
           type="text"
           id="searchTerm"
@@ -70,20 +73,24 @@ export default function Header() {
           className="hidden lg:inline"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            borderRadius:"1.5rem",
-            paddingLeft:"1.5rem",
-            paddingRight:"2.5rem"
+            borderRadius: "1.5rem",
+            paddingLeft: "1.5rem",
+            paddingRight: "2.5rem",
           }}
         />
       </form>
       <Link to={"/search"}>
-        <Button className="w-10 h-10 lg:hidden rounded-full" color="gray" pill>
+        <Button
+          className="w-10 h-10 lg:hidden rounded-full shadow-sm shadow-black dark:shadow-white"
+          color="gray"
+          pill
+        >
           <AiOutlineSearch className="self-center text-lg" />
         </Button>
       </Link>
       <div className="flex gap-2 md:order-2">
         <Button
-          className="w-10 h-10 rounded-full"
+          className="w-10 h-10 rounded-full shadow-sm shadow-black dark:shadow-white"
           color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
@@ -99,8 +106,14 @@ export default function Header() {
             arrowIcon={false}
             inline
             label={
-              <Avatar alt="user" img={currentUser.profilePicture} rounded />
+              <Avatar
+                alt="user"
+                img={currentUser.profilePicture}
+                rounded
+                className="shadow-sm shadow-black dark:shadow-white rounded-3xl"
+              />
             }
+            className="shadow-sm shadow-black dark:shadow-white rounded-md"
           >
             <Dropdown.Header>
               <span className="block text-sm">{currentUser.username}</span>
@@ -116,20 +129,35 @@ export default function Header() {
                 <Dropdown.Divider />
               </>
             )}
+            <Link to={"/"} className="md:hidden">
+              <Dropdown.Item>Home</Dropdown.Item>
+            </Link>
             <Link to={"/dashboard?tab=profile"}>
               <Dropdown.Item>Profile</Dropdown.Item>
+            </Link>
+            <Link to={"/projects"} className="md:hidden">
+              <Dropdown.Item>Projects</Dropdown.Item>
+            </Link>
+            <Link to={"/about"} className="md:hidden">
+              <Dropdown.Item>About</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
             <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
-          <Link to="/sign-in">
-            <Button gradientDuoTone="purpleToBlue" outline>
-              Sign In
-            </Button>
-          </Link>
+          <>
+            <Link to="/sign-in">
+              <Button
+                gradientDuoTone="purpleToBlue"
+                outline
+                className="shadow-sm shadow-black dark:shadow-white"
+              >
+                Sign In
+              </Button>
+            </Link>
+            <Navbar.Toggle />
+          </>
         )}
-        <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
         <Navbar.Link active={path === "/"} as={"div"}>

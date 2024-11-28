@@ -191,7 +191,7 @@ export default function DashProfile() {
           hidden
         />
         <div
-          className="relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full"
+          className="relative w-32 h-32 self-center cursor-pointer shadow-sm overflow-hidden rounded-full shadow-black dark:shadow-white"
           onClick={() => filePickerRef.current.click()}
         >
           {imageFileUploadProgress && (
@@ -254,7 +254,7 @@ export default function DashProfile() {
           type="submit"
           gradientDuoTone="purpleToBlue"
           outline
-          disabled={loading || imageFileUploading}
+          disabled={loading || imageFileUploading} className="shadow-sm shadow-black dark:shadow-white"
         >
           {loading ? "Loading..." : "Update"}
         </Button>
@@ -263,7 +263,7 @@ export default function DashProfile() {
             <Button
               type="button"
               gradientDuoTone="purpleToPink"
-              className="w-full"
+              className="w-full shadow-sm shadow-black dark:shadow-white"
             >
               Create a post
             </Button>
