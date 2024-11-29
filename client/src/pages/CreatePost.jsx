@@ -85,7 +85,7 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="p-3 max-w-3xl mx-auto min-h-screen">
+    <div className="p-3 max-w-3xl mx-auto my-20">
       <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
@@ -117,6 +117,7 @@ export default function CreatePost() {
             type="file"
             accept="image/*"
             onChange={(e) => setFile(e.target.files[0])}
+            className="shadow-sm shadow-black dark:shadow-white rounded-lg"
           />
 
           <Button
@@ -126,6 +127,7 @@ export default function CreatePost() {
             outline
             onClick={handleImageUpload}
             disabled={imageFileUploadProgress}
+            className="shadow-sm shadow-black dark:shadow-white"
           >
             {/* {imageFileUploadProgress && imageFileUploadProgress < 100 ? <></>:<></>} */}
             {imageFileUploadProgress ? (
@@ -158,7 +160,7 @@ export default function CreatePost() {
           <img
             src={formData.image}
             alt="uploaded image"
-            className="w-full h-72 object-cover"
+            className="w-full h-72 object-cover shadow-sm shadow-black dark:shadow-white rounded-md"
           />
         )}
         <ReactQuill
@@ -169,7 +171,11 @@ export default function CreatePost() {
           // disabled={imageFileUploadProgress && imageFileUploadProgress < 100}  //"Not Work's"
           onChange={(value) => setFormData({ ...formData, content: value })}
         />
-        <Button type="submit" gradientDuoTone="purpleToPink">
+        <Button
+          type="submit"
+          gradientDuoTone="purpleToPink"
+          className="shadow-sm shadow-black dark:shadow-white"
+        >
           Publish
         </Button>
         {publishError && (

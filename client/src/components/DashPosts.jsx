@@ -1,6 +1,10 @@
-import { Button, Modal, Spinner, Table } from "flowbite-react";
+import { Alert, Button, Modal, Spinner, Table, Toast } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+import {
+  HiFire,
+  HiInformationCircle,
+  HiOutlineExclamationCircle,
+} from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -11,15 +15,14 @@ export default function DashPosts() {
   const [showModel, setShowModel] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
   const [postsLoading, setPostsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   // console.log(userPosts);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(
-          `/api/post/getposts?ownerId=${currentUser._id}`
-        );
+        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
@@ -27,13 +30,15 @@ export default function DashPosts() {
             setShowMore(false);
           }
           setPostsLoading(true);
+        } else {
+          setError(data.message);
         }
       } catch (error) {
-        console.log(error.message);
+        setError(error.message);
         setPostsLoading(true);
       }
     };
-    if (currentUser.isAdmin) {
+    if (currentUser) {
       fetchPosts();
     }
   }, [currentUser._id]);
@@ -51,10 +56,10 @@ export default function DashPosts() {
           setShowMore(false);
         }
       } else {
-        console.log(data.message);
+        setError(data.message);
       }
     } catch (error) {
-      console.log(error.message);
+      setError(error.message);
     }
   };
 
@@ -69,23 +74,31 @@ export default function DashPosts() {
       );
       const data = await res.json();
       if (!res.ok) {
-        console.log(data.message);
+        setError(data.message);
       } else {
         setUserPosts((prev) =>
           prev.filter((post) => post._id !== postIdToDelete)
         );
       }
     } catch (error) {
-      console.log(error.message);
+      setError(error.message);
     }
   };
   return (
     <>
       {postsLoading ? (
         <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-          {currentUser && currentUser.isAdmin && userPosts.length ? (
+          {error && (
+            <Alert color="failure" icon={HiInformationCircle}>
+              {error}
+            </Alert>
+          )}
+          {currentUser && userPosts.length ? (
             <>
-              <Table hoverable className="shadow-sm shadow-black dark:shadow-white rounded-md">
+              <Table
+                hoverable
+                className="shadow-sm shadow-black dark:shadow-white rounded-md"
+              >
                 <Table.Head>
                   <Table.HeadCell>Data updated</Table.HeadCell>
                   <Table.HeadCell>Post image</Table.HeadCell>
@@ -154,7 +167,7 @@ export default function DashPosts() {
               )}
             </>
           ) : (
-            <p>You have no posts yet!</p>
+            <p className="text-red-500">You have no posts yet!</p>
           )}
           <Modal
             show={showModel}

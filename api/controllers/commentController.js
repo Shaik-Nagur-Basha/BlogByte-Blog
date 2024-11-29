@@ -73,7 +73,7 @@ export const deleteComment = async (req, res, next) => {
     if (!comment) {
       return next(errorHandler(400, "Comment not found"));
     }
-    if (comment.ownerId !== req.user.id && !req.user.isAdmin) {
+    if (comment.ownerId !== req.user.id || !req.user.isAdmin) {
       return next(
         errorHandler(403, "You are not allowed to delete this comment")
       );
@@ -86,29 +86,53 @@ export const deleteComment = async (req, res, next) => {
 };
 
 export const getComments = async (req, res, next) => {
-  if (!req.user.isAdmin) {
-    return next(errorHandler("You are not allowed to get the comments"));
+  if (!req.user) {
+    return next(errorHandler(430, "You are not allowed to get the comments"));
   }
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const shortDirection = req.query.sort === "asc" ? 1 : -1;
-    const comments = await Comment.find()
+    // const userComments = await Comment.find({ ownerId: req.query.userId });
+
+    const comments = await Comment.find({
+      ...(req.user.isAdmin ? {} : { ownerId: req.query.userId }),
+    })
       .sort({ createdAt: shortDirection })
       .skip(startIndex)
       .limit(limit);
 
-    const totalComments = await Comment.countDocuments();
+    const requiredData = await Comment.find({}, "createdAt numberOfLikes");
+    const userComments = req.query.userId
+      ? requiredData.filter((comment) => comment._id === req.query.userId)
+      : requiredData;
+
+    const totalComments = userComments.length;
+
     const now = new Date();
     const oneMonthAgo = new Date(
       now.getFullYear(),
       now.getMonth() - 1,
       now.getDate()
     );
-    const lastMonthComments = await Comment.countDocuments({
-      createdAt: { $gte: oneMonthAgo },
+
+    let lastMonthComments = 0;
+    let totalNoOfLikes = 0;
+    let lastMonthLikes = 0;
+    userComments.map((userComment) => {
+      userComment.createdAt >= oneMonthAgo &&
+        lastMonthComments++ &&
+        (lastMonthLikes += userComment.numberOfLikes);
+      totalNoOfLikes += userComment.numberOfLikes;
     });
-    res.status(200).json({ comments, totalComments, lastMonthComments });
+
+    res.status(200).json({
+      comments,
+      totalComments,
+      lastMonthComments,
+      totalNoOfLikes,
+      lastMonthLikes,
+    });
   } catch (error) {
     next(error);
   }

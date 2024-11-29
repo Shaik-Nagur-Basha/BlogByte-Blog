@@ -12,12 +12,13 @@ export default function DashComments() {
   const [commentIdToDelete, setCommentIdToDelete] = useState("");
   const [commentsLoading, setCommentsLoading] = useState(false);
 
-  // console.log(comments);
-
+  
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`/api/comment/getcomments`);
+        const res = await fetch(
+          `/api/comment/getcomments?userId=${currentUser._id}`
+        );
         const data = await res.json();
         // console.log(data);
 
@@ -26,14 +27,14 @@ export default function DashComments() {
           if (data.comments.length < 9) {
             setShowMore(false);
           }
-          setCommentsLoading(true)
+          setCommentsLoading(true);
         }
       } catch (error) {
         console.log(error.message);
-        setCommentsLoading(true)
+        setCommentsLoading(true);
       }
     };
-    if (currentUser.isAdmin) {
+    if (currentUser) {
       fetchComments();
     }
   }, [currentUser._id]);
@@ -41,7 +42,9 @@ export default function DashComments() {
   const handleShowMore = async () => {
     const startIndex = comments.length;
     try {
-      const res = await fetch(`/api/user/getcomments?startIndex=${startIndex}`);
+      const res = await fetch(
+        `/api/comment/getcomments?userId=${currentUser._id}&startIndex=${startIndex}`
+      );
       const data = await res.json();
       if (res.ok) {
         setComments((prev) => [...prev, ...data.comments]);
@@ -81,7 +84,7 @@ export default function DashComments() {
     <>
       {commentsLoading ? (
         <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 ">
-          {currentUser && currentUser.isAdmin && comments.length? (
+          {currentUser && comments.length ? (
             <>
               <Table
                 hoverable
@@ -138,7 +141,7 @@ export default function DashComments() {
               )}
             </>
           ) : (
-            <p>You have no comments yet!</p>
+            <p className="text-red-500">You have no comments yet!</p>
           )}
           <Modal
             show={showModel}

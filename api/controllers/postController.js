@@ -1,5 +1,6 @@
 import Post from "../models/postModel.js";
 import { errorHandler } from "../utils/error.js";
+import jwt from "jsonwebtoken";
 
 export const create = async (req, res, next) => {
   if (!req.user.isAdmin) {
@@ -31,8 +32,9 @@ export const getposts = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const shortDirection = req.query.order === "asc" ? 1 : -1;
+
     const posts = await Post.find({
-      ...(req.query.ownerId && { ownerId: req.query.ownerId }),
+      ...(req.query.userId && { ownerId: req.query.userId }),
       ...(req.query.category && { category: req.query.category }),
       ...(req.query.slug && { slug: req.query.slug }),
       ...(req.query.postId && { _id: req.query.postId }),
@@ -47,7 +49,9 @@ export const getposts = async (req, res, next) => {
       .skip(startIndex)
       .limit(limit);
 
-    const totalPosts = await Post.countDocuments();
+    const totalPosts = req.query.userId
+      ? await Post.countDocuments({ ownerId: req.query.userId })
+      : await Post.countDocuments();
 
     const now = new Date();
 
@@ -57,9 +61,14 @@ export const getposts = async (req, res, next) => {
       now.getDate()
     );
 
-    const lastMonthPosts = await Post.countDocuments({
-      createdAt: { $gte: oneMonthAgo },
-    });
+    const lastMonthPosts = req.query.userId
+      ? await Post.countDocuments({
+          createdAt: { $gte: oneMonthAgo },
+          ownerId: req.query.userId,
+        })
+      : await Post.countDocuments({
+          createdAt: { $gte: oneMonthAgo },
+        });
 
     res.status(200).json({ posts, totalPosts, lastMonthPosts });
   } catch (error) {
@@ -68,11 +77,22 @@ export const getposts = async (req, res, next) => {
 };
 
 export const destroy = async (req, res, next) => {
-  if (!req.user.isAdmin || req.user.id !== req.params.ownerId) {
+  if (
+    !req.user ||
+    !req.params.userId ||
+    !req.params.postId ||
+    req.user.id !== req.params.userId
+  ) {
     return next(errorHandler(403, "You are not allowed to delete this post"));
   }
   try {
-    await Post.findByIdAndDelete(req.params.postId);
+    const post = await Post.findById(req.params.postId);
+    post
+      ? req.params.userId === post.ownerId || req.user.isAdmin
+        ? await Post.findByIdAndDelete(req.params.postId)
+        : next(errorHandler(403, "You are not allowed to delete this post"))
+      : next(errorHandler(400, "Post not found"));
+
     res.status(200).json("This post has been deleted");
   } catch (error) {
     next(error);

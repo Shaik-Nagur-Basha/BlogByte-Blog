@@ -254,21 +254,20 @@ export default function DashProfile() {
           type="submit"
           gradientDuoTone="purpleToBlue"
           outline
-          disabled={loading || imageFileUploading} className="shadow-sm shadow-black dark:shadow-white"
+          disabled={loading || imageFileUploading}
+          className="shadow-sm shadow-black dark:shadow-white"
         >
           {loading ? "Loading..." : "Update"}
         </Button>
-        {currentUser.isAdmin && (
-          <Link to={"/create-post"}>
-            <Button
-              type="button"
-              gradientDuoTone="purpleToPink"
-              className="w-full shadow-sm shadow-black dark:shadow-white"
-            >
-              Create a post
-            </Button>
-          </Link>
-        )}
+        <Link to={"/create-post"}>
+          <Button
+            type="button"
+            gradientDuoTone="purpleToPink"
+            className="w-full shadow-sm shadow-black dark:shadow-white"
+          >
+            Create a post
+          </Button>
+        </Link>
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span onClick={() => setShowModel(true)} className="cursor-pointer">
