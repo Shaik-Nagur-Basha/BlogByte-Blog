@@ -61,7 +61,7 @@ export default function DashboardCom() {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <div className="flex justify-center gap-4 flex-wrap mt-5">
+      <div className="flex justify-center gap-4 flex-wrap mt-5 m-2">
         <div className="shadow-black shadow-sm dark:shadow-white max-w-max max-h-max p-2 rounded-md">
           <div className="w-56 flex items-center justify-between">
             <div className="">
@@ -120,7 +120,7 @@ export default function DashboardCom() {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 justify-center my-7 md:ml-7">
+      <div className="flex flex-wrap gap-4 justify-center my-7 m-2 md:ml-7">
         <div className="shadow-black shadow-sm dark:shadow-white max-w-md p-4 rounded-md">
           <div className="flex justify-between items-center">
             <h2 className="text-gray-600 dark:text-gray-300">Recent Users</h2>

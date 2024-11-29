@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <div className="min-h-screen max-w-4xl mx-auto flex flex-col justify-center items-center gap-8 p-10">
+    <div className="max-w-4xl mx-auto flex flex-col justify-center items-center gap-8 p-10">
       <h2 className="sm:text-3xl text-xl font-semibold">About BlogByte Blog</h2>
       <p className="text-center text-md sm:text-lg text-gray-500">
         Welcome to <span className="text-gray-800 dark:text-gray-200">BlogByte Blog!</span> This

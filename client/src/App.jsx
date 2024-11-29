@@ -16,6 +16,7 @@ import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTop";
 import Search from "./pages/Search";
 import ErrorPage from "./pages/ErrorPage";
+import NewUserRoute from "./components/NewUserRoute";
 
 export default function App() {
   return (
@@ -33,8 +34,10 @@ export default function App() {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Route>
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
+        <Route element={<NewUserRoute />}>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Route>
         <Route path="/post/:postSlug" element={<PostPage />} />
         <Route path="/search" element={<Search />} />
         <Route path="/:ErrorPage" element={<ErrorPage />} />

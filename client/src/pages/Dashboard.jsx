@@ -6,10 +6,13 @@ import DashPosts from "../components/DashPosts";
 import DashUsers from "../components/DashUsers";
 import DashComments from "../components/DashComments.jsx";
 import DashboardCom from "../components/DashboardCom.jsx";
+import { useSelector } from "react-redux";
+import ErrorPage from "./ErrorPage.jsx";
 
 export default function Dashboard() {
   let location = useLocation();
   let [tab, setTab] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFormUrl = urlParams.get("tab");
@@ -18,21 +21,37 @@ export default function Dashboard() {
     }
   }, [location.search]);
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
-      <div className="md:w-56">
-        {/* sidebar */}
-        <DashSidebar />
-      </div>
-      {/* profile */}
-      {tab === "profile" && <DashProfile />}
-      {/* posts... */}
-      {tab === "posts" && <DashPosts />}
-      {/* users */}
-      {tab === "users" && <DashUsers />}
-      {/* comments */}
-      {tab === "comments" && <DashComments />}
+    <div className="flex flex-col md:flex-row">
+      {/* sidebar */}
+      <DashSidebar />
+      {/* User */}
       {/* dashboard */}
-      {tab === "dash" && <DashboardCom />}
+      {currentUser && tab === "dash" && <DashboardCom />}
+      {/* Profile */}
+      {currentUser && tab === "profile" && <DashProfile />}
+      {/* Posts */}
+      {currentUser && tab === "posts" && <DashPosts />}
+      {/* comments */}
+      {currentUser && tab === "comments" && <DashComments />}
+      {/* Admin User */}
+      {/* users */}
+      {currentUser && currentUser.isAdmin && tab === "users" && <DashUsers />}
+
+      {/* Error Message */}
+      {currentUser &&
+        !currentUser.isAdmin &&
+        !["dash", "profile", "posts", "comments"].includes(tab) && (
+          <div className="flex mx-auto">
+            <ErrorPage />
+          </div>
+        )}
+      {currentUser &&
+        currentUser.isAdmin &&
+        !["dash", "profile", "posts", "comments", "users"].includes(tab) && (
+          <div className="flex mx-auto">
+            <ErrorPage />
+          </div>
+        )}
     </div>
   );
 }

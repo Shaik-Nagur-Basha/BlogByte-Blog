@@ -63,7 +63,8 @@ body {
   gap: 0;
   padding: 0;
   padding-left: 1.5rem;
-  flex-direction: row;
+  /* flex-direction: row !important; */
+  padding: 10px !important;
 }
 /* .projects > div img {
   padding: 3rem;

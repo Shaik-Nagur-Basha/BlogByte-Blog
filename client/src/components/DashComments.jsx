@@ -81,7 +81,7 @@ export default function DashComments() {
     <>
       {commentsLoading ? (
         <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 ">
-          {currentUser && currentUser.isAdmin && comments.length > 0 ? (
+          {currentUser && currentUser.isAdmin && comments.length? (
             <>
               <Table
                 hoverable
@@ -131,7 +131,7 @@ export default function DashComments() {
               {showMore && (
                 <button
                   onClick={handleShowMore}
-                  className="w-full text-teal-500 self-center text-sm py-7"
+                  className="flex mx-auto text-teal-500 self-center text-sm py-7"
                 >
                   Show more
                 </button>
@@ -142,9 +142,9 @@ export default function DashComments() {
           )}
           <Modal
             show={showModel}
+            size="md"
             onClick={() => setShowModel(false)}
             popup
-            size="md"
           >
             <Modal.Header />
             <Modal.Body>

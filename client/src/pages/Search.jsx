@@ -135,7 +135,7 @@ export default function Search() {
   };
 
   return (
-    <div className="flex sm:flex-row flex-col min-h-screen">
+    <div className="flex sm:flex-row flex-col">
       {/* <div className=""> */}
       <form
         className="sm:border-r sm:border-b-0 border-b border-r-gray-500 border-b-gray-500 sm:w-[22rem] sm:h-auto p-6 flex flex-col gap-7 items-center"

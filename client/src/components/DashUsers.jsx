@@ -138,7 +138,7 @@ export default function DashUsers() {
               {showMore && (
                 <button
                   onClick={handleShowMore}
-                  className="w-full text-teal-500 self-center text-sm py-7"
+                  className="flex mx-auto text-teal-500 self-center text-sm py-7"
                 >
                   Show more
                 </button>

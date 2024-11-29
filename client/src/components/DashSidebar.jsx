@@ -44,53 +44,55 @@ export default function DashSidebar() {
   };
 
   return (
-    <Sidebar className="w-full md:w-56 shadow-sm shadow-black dark:shadow-white">
+    <Sidebar className="md:w-56 w-full h-auto shadow-sm shadow-black dark:shadow-white rounded-md">
       <Sidebar.Items>
         <Sidebar.ItemGroup className="flex flex-col gap-1">
-          {currentUser.isAdmin && (
-            <Link to="/dashboard?tab=dash">
-              <Sidebar.Item
-                active={tab === "dash"}
-                icon={HiDatabase}
-                as="div"
-              >
-                Dashboard
-              </Sidebar.Item>
-            </Link>
-          )}
-          <Link to="/dashboard?tab=profile">
-            <Sidebar.Item
-              active={tab === "profile"}
-              icon={HiUser}
-              label={currentUser.isAdmin ? "Admin" : "User"}
-              labelColor="dark"
-              as="div"
-            >
-              Profile
-            </Sidebar.Item>
-          </Link>
-          {currentUser.isAdmin && (
-            <Link to="/dashboard?tab=posts">
-              <Sidebar.Item
-                active={tab === "posts"}
-                icon={HiDocumentText}
-                as="div"
-              >
-                Posts
-              </Sidebar.Item>
-            </Link>
-          )}
-          {currentUser.isAdmin && (
+          {currentUser && (
             <>
-              <Link to="/dashboard?tab=users">
+              <Link to="/dashboard?tab=dash">
                 <Sidebar.Item
-                  active={tab === "users"}
-                  icon={HiOutlineUserGroup}
+                  active={tab === "dash"}
+                  icon={HiDatabase}
                   as="div"
                 >
-                  Users
+                  Dashboard
                 </Sidebar.Item>
               </Link>
+              <Link to="/dashboard?tab=profile">
+                <Sidebar.Item
+                  active={tab === "profile"}
+                  icon={HiUser}
+                  label={currentUser.isAdmin ? "Admin" : "User"}
+                  labelColor="dark"
+                  as="div"
+                >
+                  Profile
+                </Sidebar.Item>
+              </Link>
+              <Link to="/dashboard?tab=posts">
+                <Sidebar.Item
+                  active={tab === "posts"}
+                  icon={HiDocumentText}
+                  as="div"
+                >
+                  Posts
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser && currentUser.isAdmin && (
+            <Link to="/dashboard?tab=users">
+              <Sidebar.Item
+                active={tab === "users"}
+                icon={HiOutlineUserGroup}
+                as="div"
+              >
+                Users
+              </Sidebar.Item>
+            </Link>
+          )}
+          {currentUser && (
+            <>
               <Link to="/dashboard?tab=comments">
                 <Sidebar.Item
                   active={tab === "comments"}
@@ -100,15 +102,15 @@ export default function DashSidebar() {
                   Comments
                 </Sidebar.Item>
               </Link>
+              <Sidebar.Item
+                onClick={handleSignout}
+                icon={HiArrowSmRight}
+                className="cursor-pointer"
+              >
+                Sign Out
+              </Sidebar.Item>
             </>
           )}
-          <Sidebar.Item
-            onClick={handleSignout}
-            icon={HiArrowSmRight}
-            className="cursor-pointer"
-          >
-            Sign Out
-          </Sidebar.Item>
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
