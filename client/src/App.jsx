@@ -16,11 +16,13 @@ import ScrollToTop from "./components/ScrollToTop";
 import Search from "./pages/Search";
 import ErrorPage from "./pages/ErrorPage";
 import NewUserRoute from "./components/NewUserRoute";
+import { FloatingActionButton } from "./components/FloatingActionButton";
 
 export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <FloatingActionButton />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

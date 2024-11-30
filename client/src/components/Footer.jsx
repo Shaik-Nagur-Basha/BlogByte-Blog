@@ -27,20 +27,12 @@ export default function FooterCom() {
               &nbsp;Blog
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6">
+          <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6" style={{letterSpacing:"1px"}}>
             <div>
-              <Footer.Title title="About" />
+              <Footer.Title title="Pages" />
               <Footer.LinkGroup className="grid gap-3">
-                <Footer.Link
-                  href="https://listing-hub.onrender.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  My First Project
-                </Footer.Link>
-                <Footer.Link href="/" target="_blank" rel="noopener noreferrer">
-                  BlogByte Blog
-                </Footer.Link>
+                <Footer.Link href="/projects">Projects</Footer.Link>
+                <Footer.Link href="/posts">Posts</Footer.Link>
               </Footer.LinkGroup>
             </div>
             <div>

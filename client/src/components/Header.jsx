@@ -153,6 +153,18 @@ export default function Header() {
                 {currentUser.email}
               </span>
             </Dropdown.Header>
+            <Link to={currentUser ? "/create-post" : "/sign-in"}>
+              <Dropdown.Item
+                style={{
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+                className="bg-gradient-to-r dark:from-red-200 dark:via-red-300 dark:to-yellow-200 from-pink-500 to-orange-400 font-semibold"
+              >
+                CREATE A POST
+              </Dropdown.Item>
+            </Link>
+            <Dropdown.Divider />
             <Link to={"/dashboard?tab=dash"}>
               <Dropdown.Item>Dashboard</Dropdown.Item>
             </Link>
@@ -187,15 +199,30 @@ export default function Header() {
           </>
         )}
       </div>
-      <Navbar.Collapse>
+      <Navbar.Collapse style={{ letterSpacing: "0.5px" }}>
         <Navbar.Link active={path === "/"} as={"div"}>
           <Link to="/">Home</Link>
         </Navbar.Link>
-        <Navbar.Link active={path === "/about"} as={"div"}>
-          <Link to="/about">About</Link>
+        <Navbar.Link
+          active={currentUser ? path === "/create-post" : path === "/sign-in"}
+          as={"div"}
+        >
+          <Link
+            to={currentUser ? "/create-post" : "/sign-in"}
+            style={{
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+            className="bg-gradient-to-r dark:from-red-200 dark:via-red-300 dark:to-yellow-200 from-pink-500 to-orange-400"
+          >
+            CREATE A POST
+          </Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
           <Link to="/projects">Projects</Link>
+        </Navbar.Link>
+        <Navbar.Link active={path === "/about"} as={"div"}>
+          <Link to="/about">About</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
