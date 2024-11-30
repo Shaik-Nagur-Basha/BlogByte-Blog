@@ -67,12 +67,6 @@ export const FloatingActionButton = () => {
             >
               Posts
             </a>
-            {/* <a
-              href="/projects"
-              className="block px-4 py-2 hover:bg-gradient-to-bl text-gray-900 dark:text-white bg-gradient-to-br from-pink-500 to-orange-400 rounded-full transition shadow-sm shadow-black dark:shadow-white"
-            >
-              Projects
-            </a> */}
             <Button
               gradientDuoTone="purpleToPink"
               style={{ letterSpacing: "0.5px" }}
@@ -104,7 +98,7 @@ export const FloatingActionButton = () => {
         <Tooltip content="Scroll to top" placement="left">
           <button
             onClick={scrollToTop}
-            className="w-14 h-14 border bg-gray-800 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-700 transition focus:ring-4 focus:ring-gray-300"
+            className="w-14 h-14 border bg-gray-800 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-700 transition"
             aria-label="Scroll to Top"
           >
             <svg

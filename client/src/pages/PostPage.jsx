@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import CallToAction from "./CallToAction";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
+import ErrorPage from "./ErrorPage";
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -25,7 +26,12 @@ export default function PostPage() {
           return;
         }
         if (res.ok) {
-          setPost(data.posts[0]);
+          if (data.posts[0]) {
+            setPost(data.posts[0]);
+          } else {
+            setLoading(false);
+            return setError("Post not found");
+          }
           setLoading(false);
           setError(null);
         }
@@ -55,6 +61,15 @@ export default function PostPage() {
     }
   }, []);
 
+  if (error)
+    return (
+      // <ErrorPage />
+      <div className="flex justify-center items-center">
+        <Alert color="failure" className="text-lg">
+          {error}
+        </Alert>
+      </div>
+    );
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -62,24 +77,21 @@ export default function PostPage() {
       </div>
     );
 
-  if (error)
-    return (
-      <div className="flex justify-center items-center">
-        <Alert color="failure" className="text-lg">
-          {error}
-        </Alert>
-      </div>
-    );
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
       <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
         {post && post.title}
       </h1>
       <Link
-        to={`/posts?category=${post.category}`}
+        to={`/posts?category=${post && post.category}`}
         className="self-center mt-5"
       >
-        <Button color="gray" pill size="xs" className="pb-1 shadow-sm shadow-black dark:shadow-white">
+        <Button
+          color="gray"
+          pill
+          size="xs"
+          className="pb-1 shadow-sm shadow-black dark:shadow-white"
+        >
           {post && post.category}
         </Button>
       </Link>
@@ -101,7 +113,7 @@ export default function PostPage() {
       <div className="max-w-4xl mx-auto w-full">
         <CallToAction />
       </div>
-      <CommentSection postId={post._id} />
+      <CommentSection postId={post && post._id} />
       <div className="flex flex-col justify-center items-center mb-5">
         <h1 className="text-xl mt-5">Recent articles</h1>
         <div className="flex flex-wrap gap-5 mt-5 justify-center">

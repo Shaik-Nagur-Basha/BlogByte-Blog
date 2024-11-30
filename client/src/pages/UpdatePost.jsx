@@ -4,10 +4,8 @@ import {
   FileInput,
   FloatingLabel,
   Select,
-  TextInput,
+  ToggleSwitch,
 } from "flowbite-react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import {
   getDownloadURL,
   getStorage,
@@ -15,11 +13,12 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase.js";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import JoditEditor from "jodit-react";
 
 export default function UpdatePost() {
   const [file, setFile] = useState(null);
@@ -30,6 +29,19 @@ export default function UpdatePost() {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { currentUser } = useSelector((state) => state.user);
+  const [editorTheme, setEditorTheme] = useState(true);
+
+  const editor = useRef(null);
+  const config = useMemo(
+    () => ({
+      theme: editorTheme ? "light" : "dark",
+      height: 200,
+      minHeight: "21rem",
+      readonly: false, // all options from https://xdsoft.net/jodit/docs/,
+      placeholder: "Start typings...",
+    }),
+    [editorTheme]
+  );
 
   useEffect(() => {
     try {
@@ -208,13 +220,45 @@ export default function UpdatePost() {
             className="w-full h-72 object-cover shadow-sm shadow-black dark:shadow-white rounded-md"
           />
         )}
-        <ReactQuill
-          theme="snow"
+        <div className="flex justify-between items-center">
+          <div className="flex items-center justify-center">
+            <span className="text-yellow-300">In Editor Click on</span>
+            &nbsp;&nbsp;
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="w-7 h-7 mx-2 p-1 dark:bg-red-400"
+            >
+              <path
+                strokeWidth="0"
+                d="M22,20.6L3.4,2H8V0H0v8h2V3.4L20.6,22H16v2h8v-8h-2V20.6z M16,0v2h4.7l-6.3,6.3l1.4,1.4L22,3.5V8h2V0H16z M8.3,14.3L2,20.6V16H0v8h8v-2H3.5l6.3-6.3L8.3,14.3z"
+              />
+            </svg>
+            <span className="text-red-600 dark:text-red-300">
+              For Full Size Editor
+            </span>
+            &nbsp;&nbsp;
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1792 1792"
+              className="w-7 h-7 mx-2 p-1 dark:bg-red-400 text-white"
+            >
+              <path d="M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z" />{" "}
+            </svg>
+            <span className="text-red-600 dark:text-red-300">
+              For Content Preview
+            </span>
+          </div>
+          <ToggleSwitch
+            checked={editorTheme}
+            label="Change Editor Theme"
+            onChange={setEditorTheme}
+          />
+        </div>
+        <JoditEditor
+          ref={editor}
           value={formData.content}
-          placeholder="Write something..."
-          className="h-72 mb-12"
-          required
-          // disabled={imageFileUploadProgress && imageFileUploadProgress < 100}  //"Not Work's"
+          config={config}
           onChange={(value) => setFormData({ ...formData, content: value })}
         />
         <Button
