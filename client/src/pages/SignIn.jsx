@@ -1,4 +1,11 @@
-import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
+import {
+  Alert,
+  Button,
+  FloatingLabel,
+  Label,
+  Spinner,
+  TextInput,
+} from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,19 +71,23 @@ export default function SignIn() {
         <div className="flex-1">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
-              <Label value="Your email" />
-              <TextInput
+              {/* <Label value="Your email" /> */}
+              <FloatingLabel
+                label="Email"
+                variant="filled"
                 type="email"
-                placeholder="example@gmail.com"
+                // placeholder="example@gmail.com"
                 id="email"
                 onChange={handleChange}
               />
             </div>
             <div>
-              <Label value="Your password" />
-              <TextInput
+              {/* <Label value="Your password" /> */}
+              <FloatingLabel
+                label="Password"
+                variant="filled"
                 type="password"
-                placeholder="***********"
+                // placeholder="***********"
                 id="password"
                 onChange={handleChange}
               />
@@ -84,7 +95,8 @@ export default function SignIn() {
             <Button
               gradientDuoTone="purpleToPink"
               type="submit"
-              disabled={loading} className="shadow-sm shadow-black dark:shadow-white"
+              disabled={loading}
+              className="shadow-sm shadow-black dark:shadow-white"
             >
               {loading ? (
                 <>

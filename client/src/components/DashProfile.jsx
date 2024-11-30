@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Alert, Button, TextInput, Modal } from "flowbite-react";
+import { Alert, Button, TextInput, Modal, FloatingLabel } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import {
   getDownloadURL,
@@ -230,24 +230,24 @@ export default function DashProfile() {
         {imageFileUploadError && (
           <Alert color="failure">{imageFileUploadError}</Alert>
         )}
-        <TextInput
+        <FloatingLabel variant="filled" label="Username"
           type="text"
           id="username"
-          placeholder="username"
+          // placeholder="username"
           defaultValue={currentUser.username}
           onChange={handleFormChange}
         />
-        <TextInput
+        <FloatingLabel variant="filled" label="Email"
           type="email"
           id="email"
-          placeholder="example@gmail.com"
+          // placeholder="example@gmail.com"
           defaultValue={currentUser.email}
           onChange={handleFormChange}
         />
-        <TextInput
+        <FloatingLabel variant="filled" label="Password"
           type="password"
           id="password"
-          placeholder="**********"
+          // placeholder="**********"
           onChange={handleFormChange}
         />
         <Button

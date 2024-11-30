@@ -1,4 +1,11 @@
-import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Navbar,
+  Select,
+  TextInput,
+} from "flowbite-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
@@ -13,6 +20,7 @@ export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const { theme } = useSelector((state) => state.theme);
   const [searchTerm, setSearchTerm] = useState("");
+  const [category, setCategory] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   // console.log(searchTerm);
@@ -44,7 +52,8 @@ export default function Header() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set("searchTerm", searchTerm.trim());
+    searchTerm && urlParams.set("searchTerm", searchTerm.trim());
+    category && urlParams.set("category", category);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
@@ -62,20 +71,43 @@ export default function Header() {
       </Link>
       <form
         onSubmit={handleSubmit}
-        className="shadow-sm shadow-black dark:shadow-white rounded-full"
+        className="lg:flex shadow-sm shadow-black dark:shadow-white rounded-full hidden"
       >
+        <Select
+          id="options"
+          className="max-w-32"
+          style={{
+            borderWidth: "0.5px",
+            borderRightWidth: "0",
+            borderTopRightRadius: "0",
+            borderBottomRightRadius: "0",
+            borderTopLeftRadius: "1.5rem",
+            borderBottomLeftRadius: "1.5rem",
+            cursor: "pointer",
+            // backgroundColor: "transparent",
+            // backgroundColor: "black",
+          }}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option>-- Select --</option>
+          <option value="javascript">JavaScript</option>
+          <option value="mongodb">MongoDB</option>
+          <option value="express">Express</option>
+          <option value="uncategorized">Uncategorized</option>
+        </Select>
         <TextInput
           type="text"
           id="searchTerm"
           value={searchTerm}
           placeholder="Search here ..."
           rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
             borderRadius: "1.5rem",
             paddingLeft: "1.5rem",
             paddingRight: "2.5rem",
+            borderTopLeftRadius: "0",
+            borderBottomLeftRadius: "0",
           }}
         />
       </form>

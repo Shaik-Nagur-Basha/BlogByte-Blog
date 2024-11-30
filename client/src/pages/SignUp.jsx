@@ -1,4 +1,4 @@
-import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
+import { Alert, Button, FloatingLabel, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
@@ -62,28 +62,28 @@ export default function SignUp() {
         <div className="flex-1">
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
-              <Label value="Your username" />
-              <TextInput
+              {/* <Label value="Your username" /> */}
+              <FloatingLabel variant="standard" label="Username"
                 type="text"
-                placeholder="Username"
+                // placeholder="Username"
                 id="username"
                 onChange={handleChange}
               />
             </div>
             <div>
-              <Label value="Your email" />
-              <TextInput
+              {/* <Label value="Your email" /> */}
+              <FloatingLabel variant="standard" label="Email"
                 type="email"
-                placeholder="example@gmail.com"
+                // placeholder="example@gmail.com"
                 id="email"
                 onChange={handleChange}
               />
             </div>
             <div>
-              <Label value="Your password" />
-              <TextInput
+              {/* <Label value="Your password" /> */}
+              <FloatingLabel variant="standard" label="Password"
                 type="password"
-                placeholder="Password"
+                // placeholder="Password"
                 id="password"
                 onChange={handleChange}
               />

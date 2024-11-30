@@ -8,7 +8,7 @@ export default function Search() {
   const [showMore, setShowMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
   //   console.log(formData);
   const navigate = useNavigate();
@@ -153,9 +153,9 @@ export default function Search() {
               setFormData({ ...formData, searchTerm: e.target.value })
             }
             style={{
-              borderRadius:"1.5rem",
-              paddingLeft:"1rem",
-              paddingRight:"1rem"
+              borderRadius: "1.5rem",
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
             }}
           />
         </div>
@@ -167,7 +167,8 @@ export default function Search() {
             }
             defaultValue={urlParams.get("order")}
             style={{
-              borderRadius:"1.5rem",
+              borderRadius: "1.5rem",
+              cursor: "pointer",
             }}
           >
             <option value="desc">Latest</option>
@@ -182,7 +183,8 @@ export default function Search() {
             }
             defaultValue={urlParams.get("category")}
             style={{
-              borderRadius:"1.5rem",
+              borderRadius: "1.5rem",
+              cursor: "pointer",
             }}
           >
             <option value="uncategorized">Uncategorized</option>

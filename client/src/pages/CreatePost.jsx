@@ -1,4 +1,11 @@
-import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
+import {
+  Alert,
+  Button,
+  FileInput,
+  FloatingLabel,
+  Select,
+  TextInput,
+} from "flowbite-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import {
@@ -89,22 +96,31 @@ export default function CreatePost() {
       <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
       <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
-          <TextInput
-            type="text"
-            placeholder="Title"
-            id="title"
-            required
-            className="flex-1"
-            // disabled={imageFileUploadProgress && imageFileUploadProgress < 100}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-          />
+          <div className="flex-1">
+            <FloatingLabel
+              variant="filled"
+              label="Post Title"
+              type="text"
+              // placeholder="Title"
+              id="title"
+              required
+              className="h-min"
+              // disabled={imageFileUploadProgress && imageFileUploadProgress < 100}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
+            />
+          </div>
           <Select
+            className="shadow-sm shadow-black dark:shadow-white rounded-lg mb-2"
             // disabled={imageFileUploadProgress && imageFileUploadProgress < 100}
             onChange={(e) =>
               setFormData({ ...formData, category: e.target.value })
             }
+            style={{
+              height: "100%",
+              cursor: "pointer",
+            }}
           >
             <option value="uncategorized">Select a category</option>
             <option value="javascript">JavaScript</option>
