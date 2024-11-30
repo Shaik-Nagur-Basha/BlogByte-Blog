@@ -15,14 +15,16 @@ export default function DashPosts() {
   const [showModel, setShowModel] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
   const [postsLoading, setPostsLoading] = useState(false);
-  const [error, setError] = useState(false);
 
   // console.log(userPosts);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+        const url = currentUser.isAdmin
+          ? `/api/post/getposts`
+          : `/api/post/getposts?userId=${currentUser._id}`;
+        const res = await fetch(url);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
@@ -31,10 +33,10 @@ export default function DashPosts() {
           }
           setPostsLoading(true);
         } else {
-          setError(data.message);
+          console.log(data.message);
         }
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
         setPostsLoading(true);
       }
     };
@@ -56,10 +58,10 @@ export default function DashPosts() {
           setShowMore(false);
         }
       } else {
-        setError(data.message);
+        console.log(data.message);
       }
     } catch (error) {
-      setError(error.message);
+      console.log(error.message);
     }
   };
 
@@ -74,25 +76,20 @@ export default function DashPosts() {
       );
       const data = await res.json();
       if (!res.ok) {
-        setError(data.message);
+        console.log(data.message);
       } else {
         setUserPosts((prev) =>
           prev.filter((post) => post._id !== postIdToDelete)
         );
       }
     } catch (error) {
-      setError(error.message);
+      console.log(error.message);
     }
   };
   return (
     <>
       {postsLoading ? (
         <div className="table-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-          {error && (
-            <Alert color="failure" icon={HiInformationCircle}>
-              {error}
-            </Alert>
-          )}
           {currentUser && userPosts.length ? (
             <>
               <Table

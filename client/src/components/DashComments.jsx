@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function DashComments() {
   const { currentUser } = useSelector((state) => state.user);
@@ -11,8 +12,8 @@ export default function DashComments() {
   const [showModel, setShowModel] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState("");
   const [commentsLoading, setCommentsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -80,6 +81,24 @@ export default function DashComments() {
       console.log(error.message);
     }
   };
+
+  const handleRedirectToPost = async (postId) => {
+    try {
+      if (!postId) {
+        return;
+      }
+      const res = await fetch(`/api/post/getposts?postId=${postId}`);
+      const data = await res.json();
+      if (!res.ok) {
+        return;
+      }
+      if (res.ok) {
+        navigate(`/post/${data.posts[0].slug}`);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
     <>
       {commentsLoading ? (
@@ -105,7 +124,12 @@ export default function DashComments() {
                       <Table.Cell>
                         {new Date(comment.updatedAt).toLocaleDateString()}
                       </Table.Cell>
-                      <Table.Cell>{comment.content}</Table.Cell>
+                      <Table.Cell
+                        className="cursor-pointer"
+                        onClick={() => handleRedirectToPost(comment.postId)}
+                      >
+                        {comment.content}
+                      </Table.Cell>
                       <Table.Cell>
                         {/* <Link
                       className="font-medium text-gray-900 dark:text-white"

@@ -112,3 +112,24 @@ export const google = async (req, res, next) => {
     next(error);
   }
 };
+
+export const adminControl = async (req, res, next) => {
+  if (!req.params.userId || !req.params.newStatus || !req.user.isAdmin) {
+    return next(
+      errorHandler(403, "You are not allowed to perform this action")
+    );
+  }
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.userId,
+      { isAdmin: req.params.newStatus },
+      { new: true, runValidators: true }
+    );
+    if (!user) {
+      return next(errorHandler(404, "User not found")); //We can use same error message for INCORRECT email For "High security"  or "User not found" For "Normal security"
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};

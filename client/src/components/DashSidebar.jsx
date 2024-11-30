@@ -69,15 +69,6 @@ export default function DashSidebar() {
                   Profile
                 </Sidebar.Item>
               </Link>
-              <Link to="/dashboard?tab=posts">
-                <Sidebar.Item
-                  active={tab === "posts"}
-                  icon={HiDocumentText}
-                  as="div"
-                >
-                  Posts
-                </Sidebar.Item>
-              </Link>
             </>
           )}
           {currentUser && currentUser.isAdmin && (
@@ -93,6 +84,15 @@ export default function DashSidebar() {
           )}
           {currentUser && (
             <>
+              <Link to="/dashboard?tab=posts">
+                <Sidebar.Item
+                  active={tab === "posts"}
+                  icon={HiDocumentText}
+                  as="div"
+                >
+                  Posts
+                </Sidebar.Item>
+              </Link>
               <Link to="/dashboard?tab=comments">
                 <Sidebar.Item
                   active={tab === "comments"}

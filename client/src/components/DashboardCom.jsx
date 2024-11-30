@@ -109,7 +109,7 @@ export default function DashboardCom() {
             <div className="">
               <h1 className="uppercase text-gray-400">Total Posts</h1>
               <span
-                className={totalUsers ? `text-2xl` : `text-2xl text-red-500`}
+                className={totalPosts ? `text-2xl` : `text-2xl text-red-500`}
               >
                 {postsLoading ? totalPosts : <Spinner />}
               </span>
@@ -132,7 +132,7 @@ export default function DashboardCom() {
             <div className="">
               <h1 className="uppercase text-gray-400">Total Comments</h1>
               <span
-                className={totalUsers ? `text-2xl` : `text-2xl text-red-500`}
+                className={totalComments ? `text-2xl` : `text-2xl text-red-500`}
               >
                 {commentsLoading ? totalComments : <Spinner />}
               </span>
@@ -161,7 +161,7 @@ export default function DashboardCom() {
             <div className="">
               <h1 className="uppercase text-gray-400">Total Likes</h1>
               <span
-                className={totalUsers ? `text-2xl` : `text-2xl text-red-500`}
+                className={totalNoOfLikes ? `text-2xl` : `text-2xl text-red-500`}
               >
                 {commentsLoading ? totalNoOfLikes : <Spinner />}
               </span>
@@ -220,14 +220,14 @@ export default function DashboardCom() {
                       </Table.Row>
                     ))
                   ) : (
-                    <p className="text-red-500 mt-5 translate-x-1/2">
+                    <tr><td className="text-red-500 mt-5 translate-x-1/2">
                       You have no users yet!
-                    </p>
+                    </td></tr>
                   )
                 ) : (
-                  <p className="mt-5 translate-x-1/2">
+                  <tr><td className="mt-5 translate-x-1/2">
                     <Spinner />
-                  </p>
+                  </td></tr>
                 )}
               </Table.Body>
             </Table>
@@ -273,14 +273,14 @@ export default function DashboardCom() {
                     </Table.Row>
                   ))
                 ) : (
-                  <p className="text-red-500 mt-5 translate-x-1/2">
+                  <tr><td className="text-red-500 mt-5 translate-x-1/2">
                     You have no posts yet!
-                  </p>
+                  </td></tr>
                 )
               ) : (
-                <p className="mt-5 translate-x-1/2">
+                <tr><td className="mt-5 translate-x-1/2">
                   <Spinner />
-                </p>
+                </td></tr>
               )}
             </Table.Body>
           </Table>
@@ -317,14 +317,14 @@ export default function DashboardCom() {
                     </Table.Row>
                   ))
                 ) : (
-                  <p className="text-red-500 mt-5 translate-x-1/3">
+                  <tr><td className="text-red-500 mt-5 translate-x-1/3">
                     You have no comments yet!
-                  </p>
+                  </td></tr>
                 )
               ) : (
-                <p className="mt-5 translate-x-1/2">
+                <tr><td className="mt-5 translate-x-1/2">
                   <Spinner />
-                </p>
+                </td></tr>
               )}
             </Table.Body>
           </Table>

@@ -102,10 +102,14 @@ export const getComments = async (req, res, next) => {
       .skip(startIndex)
       .limit(limit);
 
-    const requiredData = await Comment.find({}, "createdAt numberOfLikes");
+    const requiredData = await Comment.find(
+      {},
+      "createdAt numberOfLikes ownerId -_id"
+    );
     const userComments = req.query.userId
-      ? requiredData.filter((comment) => comment._id === req.query.userId)
+      ? requiredData.filter((comment) => comment.ownerId === req.query.userId)
       : requiredData;
+    // console.log(userComments);
 
     const totalComments = userComments.length;
 

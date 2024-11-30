@@ -72,6 +72,30 @@ export default function DashUsers() {
       console.log(error.message);
     }
   };
+
+  const handleAdminApproval = async (userId, newStatus) => {
+    try {
+      if (!userId) {
+        return;
+      }
+      const res = await fetch(`/api/auth/${userId}/${newStatus}`, {
+        method: "PUT",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        setUsers((prev) =>
+          prev.map((user) =>
+            user._id === userId ? { ...user, isAdmin: !user.isAdmin } : user
+          )
+        );
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       {usersLoading ? (
@@ -115,9 +139,15 @@ export default function DashUsers() {
                       <Table.Cell>{user.email}</Table.Cell>
                       <Table.Cell>
                         {user.isAdmin ? (
-                          <FaCheck className="text-green-500" />
+                          <FaCheck
+                            className="text-green-500 cursor-pointer"
+                            onClick={() => handleAdminApproval(user._id, false)}
+                          />
                         ) : (
-                          <FaTimes className="text-red-500" />
+                          <FaTimes
+                            className="text-red-500 cursor-pointer"
+                            onClick={() => handleAdminApproval(user._id, true)}
+                          />
                         )}
                       </Table.Cell>
                       <Table.Cell>

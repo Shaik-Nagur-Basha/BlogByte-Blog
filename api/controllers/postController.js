@@ -1,9 +1,8 @@
 import Post from "../models/postModel.js";
 import { errorHandler } from "../utils/error.js";
-import jwt from "jsonwebtoken";
 
 export const create = async (req, res, next) => {
-  if (!req.user.isAdmin) {
+  if (!req.user) {
     return next(errorHandler(403, "You are not allowed to create a post"));
   }
   if (!req.body.title || !req.body.content) {
@@ -81,7 +80,8 @@ export const destroy = async (req, res, next) => {
     !req.user ||
     !req.params.userId ||
     !req.params.postId ||
-    req.user.id !== req.params.userId
+    req.user.id !== req.params.userId ||
+    !req.user.isAdmin
   ) {
     return next(errorHandler(403, "You are not allowed to delete this post"));
   }
@@ -100,7 +100,7 @@ export const destroy = async (req, res, next) => {
 };
 
 export const update = async (req, res, next) => {
-  if (!req.user.isAdmin || req.user.id !== req.params.ownerId) {
+  if (!req.user || req.user.id !== req.params.ownerId || !req.user.isAdmin) {
     return next(errorHandler(403, "You are not allowed to update this post"));
   }
   try {
