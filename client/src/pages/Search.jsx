@@ -125,7 +125,7 @@ export default function Search() {
       // setLoading(true);
       // const res = await fetch(`/api/post/getposts?${searchQuery}`);
       // const data = await res.json();
-      navigate(`/search?${searchQuery}`);
+      navigate(`/posts?${searchQuery}`);
       // setPosts([...data.posts]);
       // setLoading(false);
     } catch (error) {

@@ -55,7 +55,7 @@ export default function Header() {
     searchTerm && urlParams.set("searchTerm", searchTerm.trim());
     category && urlParams.set("category", category);
     const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
+    navigate(`/posts?${searchQuery}`);
   };
 
   return (
@@ -111,7 +111,7 @@ export default function Header() {
           }}
         />
       </form>
-      <Link to={"/search"}>
+      <Link to={"/posts"}>
         <Button
           className="w-10 h-10 lg:hidden rounded-full shadow-sm shadow-black dark:shadow-white"
           color="gray"

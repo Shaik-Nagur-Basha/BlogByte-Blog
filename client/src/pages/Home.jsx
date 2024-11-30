@@ -34,7 +34,7 @@ export default function Home() {
           web development, software engineering, and programming languages.
         </p>
         <Link
-          to={"/search"}
+          to={"/posts"}
           className="text-teal-500 hover:underline font-bold w-fit"
         >
           View all posts
@@ -59,7 +59,7 @@ export default function Home() {
         {posts.length && (
           <div className="flex justify-center items-center mt-4">
             <Link
-              to={"/search"}
+              to={"/posts"}
               className="text-teal-500 hover:underline font-bold w-fit"
             >
               View all posts

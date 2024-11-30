@@ -36,7 +36,7 @@ export default function App() {
           <Route path="/sign-up" element={<SignUp />} />
         </Route>
         <Route path="/post/:postSlug" element={<PostPage />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/posts" element={<Search />} />
         <Route path="/:ErrorPage" element={<ErrorPage />} />
       </Routes>
       <FooterCom />
