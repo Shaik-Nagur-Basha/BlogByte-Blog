@@ -241,7 +241,6 @@ export default function Header() {
           gradientDuoTone="pinkToOrange"
           className="hover:bg-gradient-to-tl text-black dark:text-white shadow-sm shadow-black dark:shadow-gray-500 fixed right-2 z-10 top-20"
           style={{ letterSpacing: "1px" }}
-          // onClick={() => navigate("signup")}
           href="/sign-up"
         >
           CREATE ACCOUNT
