@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Alert, Button, TextInput, Modal, FloatingLabel } from "flowbite-react";
+import { Alert, Button, FloatingLabel } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
 import {
   getDownloadURL,
@@ -20,8 +20,8 @@ import {
   signoutSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import DecisionModel from "./DecisionModel";
 
 export default function DashProfile() {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -230,21 +230,27 @@ export default function DashProfile() {
         {imageFileUploadError && (
           <Alert color="failure">{imageFileUploadError}</Alert>
         )}
-        <FloatingLabel variant="filled" label="Username"
+        <FloatingLabel
+          variant="filled"
+          label="Username"
           type="text"
           id="username"
           // placeholder="username"
           defaultValue={currentUser.username}
           onChange={handleFormChange}
         />
-        <FloatingLabel variant="filled" label="Email"
+        <FloatingLabel
+          variant="filled"
+          label="Email"
           type="email"
           id="email"
           // placeholder="example@gmail.com"
           defaultValue={currentUser.email}
           onChange={handleFormChange}
         />
-        <FloatingLabel variant="filled" label="Password"
+        <FloatingLabel
+          variant="filled"
+          label="Password"
           type="password"
           id="password"
           // placeholder="**********"
@@ -287,35 +293,12 @@ export default function DashProfile() {
           {updateUserError}
         </Alert>
       )}
-      {/* {error && (
-        <Alert className="mt-5" color="failure">
-          {error}
-        </Alert>
-      )} */}
-      <Modal
-        show={showModel}
-        onClick={() => setShowModel(false)}
-        popup
-        size="md"
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-            <div className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete your account?
-            </div>
-            <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={handleDeleteUser}>
-                Yes, I'm sure
-              </Button>
-              <Button color="gray" onClick={() => setShowModel(false)}>
-                No, cancel
-              </Button>
-            </div>
-          </div>
-        </Modal.Body>
-      </Modal>
+      <DecisionModel
+        showModel={showModel}
+        setShowModel={setShowModel}
+        message={"account"}
+        handleDelete={handleDeleteUser}
+      />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Comment from "./Comment";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import DecisionModel from "./DecisionModel";
 
 export default function CommentSection({ postId }) {
   const { currentUser } = useSelector((state) => state.user);
@@ -153,7 +154,12 @@ export default function CommentSection({ postId }) {
             <p className="text-gray-500 text-sm">
               {200 - comment.length} characters remaining
             </p>
-            <Button gradientDuoTone="purpleToBlue" outline type="submit" className="shadow-sm shadow-black dark:shadow-white">
+            <Button
+              gradientDuoTone="purpleToBlue"
+              outline
+              type="submit"
+              className="shadow-sm shadow-black dark:shadow-white"
+            >
               Submit
             </Button>
           </div>
@@ -188,7 +194,7 @@ export default function CommentSection({ postId }) {
           ))}
         </>
       )}
-      <Modal
+      {/* <Modal
         show={showModel}
         onClick={() => setShowModel(false)}
         popup
@@ -214,7 +220,13 @@ export default function CommentSection({ postId }) {
             </div>
           </div>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
+      <DecisionModel
+        showModel={showModel}
+        setShowModel={setShowModel}
+        message={"comment"}
+        handleDelete={() => handleDelete(commentToDelete)}
+      />
     </div>
   );
 }

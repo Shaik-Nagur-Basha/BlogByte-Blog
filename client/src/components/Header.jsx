@@ -65,7 +65,11 @@ export default function Header() {
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white flex justify-center items-center"
       >
-        <img src={logo} className="h-10 w-10 sm:h-12 sm:w-12 mx-2" alt="BlogByte Blog Logo" />
+        <img
+          src={logo}
+          className="h-10 w-10 sm:h-12 sm:w-12 mx-2"
+          alt="BlogByte Blog Logo"
+        />
         <span className="px-1 pb-[2px] bg-gradient-to-br hover:bg-gradient-to-bl from-indigo-500 via-purple-500 to-pink-500 rounded-t-md text-white">
           BlogByte
         </span>
@@ -166,25 +170,56 @@ export default function Header() {
                 CREATE A POST
               </Dropdown.Item>
             </Link>
+            <Link to={"/projects"}>
+              <Dropdown.Item
+                style={{
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+                className="bg-gradient-to-r dark:from-red-200 dark:via-red-300 dark:to-yellow-200 from-pink-500 to-orange-400 font-semibold"
+              >
+                PROJECTS
+              </Dropdown.Item>
+            </Link>
             <Dropdown.Divider />
             <Link to={"/dashboard?tab=dash"}>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
+              <Dropdown.Item
+                style={{ letterSpacing: "1px" }}
+                className="font-semibold"
+              >
+                Dashboard
+              </Dropdown.Item>
             </Link>
             <Dropdown.Divider />
             <Link to={"/"} className="md:hidden">
-              <Dropdown.Item>Home</Dropdown.Item>
+              <Dropdown.Item style={{ letterSpacing: "1px" }}>
+                Home
+              </Dropdown.Item>
             </Link>
             <Link to={"/dashboard?tab=profile"}>
-              <Dropdown.Item>Profile</Dropdown.Item>
+              <Dropdown.Item
+                style={{ letterSpacing: "1px" }}
+                className="font-semibold"
+              >
+                Profile
+              </Dropdown.Item>
             </Link>
-            <Link to={"/projects"} className="md:hidden">
+            {/* <Link to={"/projects"} className="md:hidden">
               <Dropdown.Item>Projects</Dropdown.Item>
-            </Link>
+            </Link> */}
             <Link to={"/about"} className="md:hidden">
-              <Dropdown.Item>About</Dropdown.Item>
+              <Dropdown.Item style={{ letterSpacing: "1px" }}>
+                About
+              </Dropdown.Item>
             </Link>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
+            <Dropdown.Item
+              onClick={handleSignout}
+              style={{ letterSpacing: "1px" }}
+              className="font-semibold !text-red-500"
+            >
+              Sign out
+            </Dropdown.Item>
           </Dropdown>
         ) : (
           <>
@@ -221,8 +256,20 @@ export default function Header() {
           </Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/projects">Projects</Link>
+          <Link
+            to={"/projects"}
+            style={{
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+            className="bg-gradient-to-r dark:from-red-200 dark:via-red-300 dark:to-yellow-200 from-pink-500 to-orange-400"
+          >
+            PROJECTS
+          </Link>
         </Navbar.Link>
+        {/* <Navbar.Link active={path === "/projects"} as={"div"}>
+          <Link to="/projects">Projects</Link>
+        </Navbar.Link> */}
         <Navbar.Link active={path === "/about"} as={"div"}>
           <Link to="/about">About</Link>
         </Navbar.Link>

@@ -85,11 +85,33 @@ body {
 input select {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   --tw-shadow-color: #000000;
   --tw-shadow: var(--tw-shadow-colored);
 }
 input select:is(.dark *) {
+  --tw-shadow-color: #ffffff;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+#root:has(.dark) ~ div > .decision-modal > div > div {
+  background-color: rgb(16, 23, 42);
+  --tw-shadow-color: #ffffff;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+#root:has(.light) ~ div > .decision-modal > div > div,
+#root:has(.light) ~ div > .decision-modal > div > div button {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-shadow-color: #000000;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+#root:has(.dark) ~ div > .decision-modal > div > div button {
   --tw-shadow-color: #ffffff;
   --tw-shadow: var(--tw-shadow-colored);
 }

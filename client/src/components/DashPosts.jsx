@@ -7,6 +7,7 @@ import {
 } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import DecisionModel from "./DecisionModel";
 
 export default function DashPosts() {
   const { currentUser } = useSelector((state) => state.user);
@@ -166,7 +167,7 @@ export default function DashPosts() {
           ) : (
             <p className="text-red-500">You have no posts yet!</p>
           )}
-          <Modal
+          {/* <Modal
             show={showModel}
             onClick={() => setShowModel(false)}
             popup
@@ -189,10 +190,16 @@ export default function DashPosts() {
                 </div>
               </div>
             </Modal.Body>
-          </Modal>
+          </Modal> */}
+          <DecisionModel
+            showModel={showModel}
+            setShowModel={setShowModel}
+            message={"post"}
+            handleDelete={handleDeletePost}
+          />
         </div>
       ) : (
-        <div className="m-auto">
+        <div className="md:m-auto mx-auto mt-5">
           <Spinner className="size-12" />
         </div>
       )}

@@ -4,6 +4,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import DecisionModel from "./DecisionModel";
 
 export default function DashComments() {
   const { currentUser } = useSelector((state) => state.user);
@@ -167,11 +168,17 @@ export default function DashComments() {
           ) : (
             <p className="text-red-500">You have no comments yet!</p>
           )}
-          <Modal
+          <DecisionModel
+            showModel={showModel}
+            setShowModel={setShowModel}
+            message={"comment"}
+            handleDelete={handleDeleteComment}
+          />
+          {/* <Modal
             show={showModel}
             size="md"
             onClick={() => setShowModel(false)}
-            popup
+            popup className="decision-modal"
           >
             <Modal.Header />
             <Modal.Body>
@@ -190,10 +197,10 @@ export default function DashComments() {
                 </div>
               </div>
             </Modal.Body>
-          </Modal>
+          </Modal> */}
         </div>
       ) : (
-        <div className="m-auto">
+        <div className="md:m-auto mx-auto mt-5">
           <Spinner className="size-12" />
         </div>
       )}

@@ -1,8 +1,8 @@
-import { Button, Modal, Spinner, Table } from "flowbite-react";
+import { Spinner, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import DecisionModel from "./DecisionModel";
 
 export default function DashUsers() {
   const { currentUser } = useSelector((state) => state.user);
@@ -179,7 +179,7 @@ export default function DashUsers() {
               You have no users yet!
             </p>
           )}
-          <Modal
+          {/* <Modal
             show={showModel}
             onClick={() => setShowModel(false)}
             popup
@@ -202,10 +202,16 @@ export default function DashUsers() {
                 </div>
               </div>
             </Modal.Body>
-          </Modal>
+          </Modal> */}
+          <DecisionModel
+            showModel={showModel}
+            setShowModel={setShowModel}
+            message={"user"}
+            handleDelete={handleDeleteUser}
+          />
         </div>
       ) : (
-        <div className="m-auto">
+        <div className="md:m-auto mx-auto mt-5">
           <Spinner className="size-12" />
         </div>
       )}
