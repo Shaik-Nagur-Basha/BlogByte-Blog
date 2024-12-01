@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice.js";
 import { signoutSuccess } from "../redux/user/userSlice.js";
 import { useEffect, useState } from "react";
+import logo from "../assets/logo.png";
 
 export default function Header() {
   const path = useLocation().pathname;
@@ -62,9 +63,10 @@ export default function Header() {
     <Navbar className="border-b-2 sticky top-0 right-0 left-0 z-50 shadow-sm shadow-black dark:shadow-white">
       <Link
         to="/"
-        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
+        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white flex justify-center items-center"
       >
-        <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+        <img src={logo} className="h-10 w-10 sm:h-12 sm:w-12 mx-2" alt="BlogByte Blog Logo" />
+        <span className="px-1 pb-[2px] bg-gradient-to-br hover:bg-gradient-to-bl from-indigo-500 via-purple-500 to-pink-500 rounded-t-md text-white">
           BlogByte
         </span>
         &nbsp;Blog

@@ -30,7 +30,7 @@ export default function PostPage() {
             setPost(data.posts[0]);
           } else {
             setLoading(false);
-            return setError("Post not found");
+            return setError("Post doesn't exist");
           }
           setLoading(false);
           setError(null);
@@ -64,7 +64,7 @@ export default function PostPage() {
   if (error)
     return (
       // <ErrorPage />
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center m-5">
         <Alert color="failure" className="text-lg">
           {error}
         </Alert>
