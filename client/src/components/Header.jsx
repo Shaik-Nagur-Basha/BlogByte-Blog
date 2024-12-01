@@ -236,6 +236,15 @@ export default function Header() {
           </>
         )}
       </div>
+      <Button
+        gradientDuoTone="pinkToOrange"
+        className="hover:bg-gradient-to-tl text-black dark:text-white shadow-sm shadow-black dark:shadow-gray-500 fixed right-2 z-10 top-20"
+        style={{ letterSpacing: "1px" }}
+        // onClick={() => navigate("signup")}
+        href="/sign-up"
+      >
+        CREATE ACCOUNT
+      </Button>
       <Navbar.Collapse style={{ letterSpacing: "0.5px" }}>
         <Navbar.Link active={path === "/"} as={"div"}>
           <Link to="/">Home</Link>
