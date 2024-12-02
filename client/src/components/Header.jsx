@@ -80,7 +80,7 @@ export default function Header() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="shadow-sm shadow-black dark:shadow-white rounded-full hidden"
+          className="shadow-sm shadow-black dark:shadow-white rounded-full hidden min-[1060px]:flex"
         >
           <Select
             id="options"

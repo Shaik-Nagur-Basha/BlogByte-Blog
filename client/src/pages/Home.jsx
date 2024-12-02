@@ -25,7 +25,7 @@ export default function Home() {
   }, []);
   return (
     <div className="">
-      <div className="flex flex-col flex-nowrap gap-5 max-w-full md:p-28 p-5 my-7">
+      <div className="flex flex-col flex-nowrap gap-5 max-w-full lg:p-28 p-5 my-7">
         <h1 className="max-sm:text-lg sm:text-3xl font-bold md:text-5xl">
           Welcome to BlogByte Blog
         </h1>

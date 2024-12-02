@@ -151,15 +151,23 @@ input select:is(.dark *) {
   }
 }
 
-@media (min-width: 1060px) {
+/* @media (min-width: 1060px) {
   nav form {
     display: flex !important;
   }
-}
+} */
 
 @media (min-width: 1280px) {
-  nav > div {
+  /* nav > div {
     margin: 0 !important;
     max-width: 100% !important;
+  } */
+  nav ul li {
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
   }
+}
+
+nav > div {
+  max-width: 100% !important;
 }

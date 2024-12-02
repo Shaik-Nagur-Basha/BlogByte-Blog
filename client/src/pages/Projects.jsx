@@ -29,35 +29,28 @@ export default function Projects() {
   const handleFullscreen = () => {
     if (iframeRef.current) {
       const element = iframeRef.current; // Get the iframe element
-      if (
-        element.getAttribute("src") ===
-        "https://shaik-nagur-basha.github.io/Spotify-Home-UI-Clone/"
-      ) {
-        return (location.href =
-          "https://shaik-nagur-basha.github.io/Spotify-Home-UI-Clone/");
-      }
-      if (element.requestFullscreen) {
-        element.requestFullscreen();
-      } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-      } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-      } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
+      if (element.getAttribute("src")) {
+        location.href = element.getAttribute("src");
       }
     }
   };
 
   return (
     <div className="">
-      <div className="m-4">
-        <div className="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-lg transition-all">
+      <div className="">
+        <div className="bg-white m-2 dark:bg-gray-800 sm:p-5 p-2 rounded-xl shadow-lg transition-all">
           {/* Tab buttons with underline effect */}
-          <div className="flex justify-between overflow-x-auto">
+          <div className="flex justify-between min-[1330px]:items-center gap-4 sm:flex-col min-[1330px]:flex-row overflow-x-auto">
             <div>
               <div className="flex justify-between items-center">
                 <Kbd>Major Projects</Kbd>
-                <p className="text-gray-500 font-mono my-2 text-xs sm:text-sm flex justify-center items-center">
+                <Kbd
+                  onClick={handleFullscreen}
+                  className="cursor-pointer sm:hidden"
+                >
+                  <BsArrowsFullscreen />
+                </Kbd>
+                <p className="text-gray-500 font-mono text-xs sm:text-sm flex justify-center items-center">
                   Source Codes on
                   <a
                     href="https://github.com/Shaik-Nagur-Basha?tab=repositories"
@@ -70,7 +63,7 @@ export default function Projects() {
                   </a>
                 </p>
               </div>
-              <div className="flex space-x-6 border-b-4 border-transparent">
+              <div className="flex space-x-6 border-transparent w-max">
                 {tabs.slice(0, 3).map((tab, index) => (
                   <button
                     key={index}
@@ -85,6 +78,7 @@ export default function Projects() {
                         ? "text-blue-600 dark:text-blue-400"
                         : "text-gray-600 dark:text-gray-300"
                     }`}
+                    style={{ lineHeight: "1.25rem" }}
                   >
                     {tab}
                     <span
@@ -96,23 +90,30 @@ export default function Projects() {
                 ))}
               </div>
             </div>
-            <div className="">
+            <div className="max-sm:hidden">
               <div className="flex justify-between items-center">
                 <Kbd>Mini Projects</Kbd>
                 <Kbd onClick={handleFullscreen} className="cursor-pointer">
                   <BsArrowsFullscreen />
                 </Kbd>
               </div>
-              <div className="flex space-x-6 border-b-4 border-transparent">
+              <div className="flex space-x-6 border-b-4 border-transparent w-max">
                 {tabs.slice(3, 7).map((tab, index) => (
                   <button
                     key={index + 3}
-                    onClick={() => setActiveTab(index + 3)}
+                    onClick={(e) => {
+                      if (e.target.innerText === "Spotify-Home-UI-Clone") {
+                        return (location.href =
+                          "https://shaik-nagur-basha.github.io/Spotify-Home-UI-Clone/");
+                      }
+                      setActiveTab(index + 3);
+                    }}
                     className={`relative py-3 text-lg font-semibold transition-all duration-300 transform hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none ${
                       activeTab === index + 3
                         ? "text-blue-600 dark:text-blue-400"
                         : "text-gray-600 dark:text-gray-300"
                     }`}
+                    style={{ lineHeight: "1.25rem" }}
                   >
                     {tab}
                     <span
@@ -125,24 +126,17 @@ export default function Projects() {
               </div>
             </div>
           </div>
-          {/* Tab content with smooth transition */}
-          <div
-            className="mt-4 rounded-lg p-[0.5px] transition-all overflow-x-auto shadow-sm shadow-black dark:shadow-white"
-            style={{ transition: "opacity 0.3s ease-in-out" }}
-          >
-            <iframe
-              src={tabContents[activeTab]}
-              ref={iframeRef}
-              className={`text-gray-800 rounded-lg dark:text-gray-100 text-lg
-                ${
-                  tabContents[activeTab] ===
-                  "https://shaik-nagur-basha.github.io/Spotify-Home-UI-Clone/"
-                    ? "!w-[100vw]  h-[86vh]"
-                    : "w-full min-h-screen"
-                }
-              `}
-            ></iframe>
-          </div>
+        </div>
+        {/* Tab content with smooth transition */}
+        <div
+          className="bg-white mx-2 mb-2 dark:bg-gray-800 rounded-xl shadow-lg transition-all p-[0.5px] overflow-x-auto"
+          style={{ transition: "opacity 0.3s ease-in-out" }}
+        >
+          <iframe
+            src={tabContents[activeTab]}
+            ref={iframeRef}
+            className={`text-gray-800 rounded-lg dark:text-gray-100 text-lg max-sm:min-w-[412px] w-full min-h-screen`}
+          ></iframe>
         </div>
       </div>
     </div>

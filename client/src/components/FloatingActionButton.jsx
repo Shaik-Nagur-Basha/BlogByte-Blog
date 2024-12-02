@@ -51,19 +51,19 @@ export const FloatingActionButton = () => {
         {/* Menu Items */}
         {menuOpen && (
           <div
-            className="absolute w-max place-items-center font-mono bottom-full right-0 mb-3 rounded-lg p-3 space-y-2"
+            className="absolute w-max flex flex-col place-items-center font-mono bottom-full right-0 mb-3 rounded-lg p-3 space-y-2"
             onMouseEnter={() => setMenuOpen(true)}
             onMouseLeave={() => setMenuOpen(false)}
           >
             <a
               href="/"
-              className="block px-4 py-2 hover:bg-gradient-to-bl hover:scale-105 text-black dark:text-white bg-gradient-to-br from-pink-500 to-orange-400 rounded-full transition shadow-sm shadow-black dark:shadow-white"
+              className="w-fit block px-4 py-2 hover:bg-gradient-to-bl hover:scale-105 text-black dark:text-white bg-gradient-to-br from-pink-500 to-orange-400 rounded-full transition shadow-sm shadow-black dark:shadow-white"
             >
               Home
             </a>
             <a
               href="/posts"
-              className="block px-4 py-2 hover:bg-gradient-to-bl hover:scale-105 text-black dark:text-white bg-gradient-to-br from-pink-500 to-orange-400 rounded-full transition shadow-sm shadow-black dark:shadow-white"
+              className="w-fit block px-4 py-2 hover:bg-gradient-to-bl hover:scale-105 text-black dark:text-white bg-gradient-to-br from-pink-500 to-orange-400 rounded-full transition shadow-sm shadow-black dark:shadow-white"
             >
               Posts
             </a>
@@ -71,13 +71,13 @@ export const FloatingActionButton = () => {
               gradientDuoTone="purpleToPink"
               style={{ letterSpacing: "0.5px" }}
               href="/projects"
-              className="rounded-full shadow-sm shadow-black dark:shadow-white font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-black dark:text-white hover:bg-gradient-to-l hover:scale-105"
+              className="w-fit rounded-full shadow-sm shadow-black dark:shadow-white font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-black dark:text-white hover:bg-gradient-to-l hover:scale-105"
             >
               Projects
             </Button>
             <a
               href="/dashboard?tab=dash"
-              className="block px-4 py-2 hover:bg-gradient-to-bl hover:scale-105 text-black dark:text-white bg-gradient-to-br from-pink-500 to-orange-400 rounded-full transition shadow-sm shadow-black dark:shadow-white"
+              className="w-fit block px-4 py-2 hover:bg-gradient-to-bl hover:scale-105 text-black dark:text-white bg-gradient-to-br from-pink-500 to-orange-400 rounded-full transition shadow-sm shadow-black dark:shadow-white"
             >
               Dashboard
             </a>
@@ -85,7 +85,7 @@ export const FloatingActionButton = () => {
               gradientDuoTone="purpleToPink"
               style={{ letterSpacing: "0.5px" }}
               href={currentUser ? "/create-post" : "/sign-in"}
-              className="rounded-full shadow-sm shadow-black dark:shadow-white bg-gradient-to-r font-semibold font-mono from-purple-500 to-pink-500 text-black dark:text-white hover:bg-gradient-to-l hover:scale-105"
+              className="w-fit rounded-full shadow-sm shadow-black dark:shadow-white bg-gradient-to-r font-semibold font-mono from-purple-500 to-pink-500 text-black dark:text-white hover:bg-gradient-to-l hover:scale-105"
             >
               CREATE A POST
             </Button>
