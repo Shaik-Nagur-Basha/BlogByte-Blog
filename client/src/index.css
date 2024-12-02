@@ -57,6 +57,34 @@ body {
   padding: 0.75rem;
   /* margin: 0; */
 }
+@media (max-width: 410px) {
+  /* Home and Post Page's */
+  .home > .calltoaction h2 {
+    font-size: 1rem;
+    line-height: 1.75rem;
+  }
+  .home > .calltoaction img,
+  .postPage > .calltoaction img {
+    max-width: 21.5rem;
+  }
+  .home > .calltoaction,
+  .postPage > .calltoaction {
+    gap: 1rem;
+  }
+  .home > .calltoaction button,
+  .postPage > .calltoaction button {
+    margin-top: 0.5rem;
+  }
+  .home > .calltoaction p,
+  .postPage > .calltoaction p {
+    font-size: 0.65rem;
+  }
+
+  .postPage > .calltoaction h2 {
+    font-size: 0.94rem;
+    line-height: 1.75rem;
+  }
+}
 
 /* projects Page */
 .projects > div {
@@ -114,4 +142,24 @@ input select:is(.dark *) {
 #root:has(.dark) ~ div > .decision-modal > div > div button {
   --tw-shadow-color: #ffffff;
   --tw-shadow: var(--tw-shadow-colored);
+}
+
+@media (min-width: 768px) {
+  nav ul li {
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+  }
+}
+
+@media (min-width: 1060px) {
+  nav form {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  nav > div {
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
 }
