@@ -1,6 +1,25 @@
-# BlogByte Blog
+# BlogByte Blog - Version 2 Update
 
 `BlogByte Blog` is a full-stack blogging platform built using the `MERN (MongoDB, Express, React, Node.js) stack`. This platform allows users to create, view, and manage blog posts with user authentication and real-time updates. It utilizes `RESTful APIs ` for backend operations and follows the `MVC (Model-View-Controller)` design pattern for better scalability and organization.
+
+#### **What's New in Version 2**  
+
+1. **User Empowerment**  
+   - **Posts and Comments for All**: Users (not just admins) can now create, edit, and manage their own posts and comments, making the platform more inclusive and dynamic.  
+
+2. **Enhanced User Experience**  
+   - **New Input Styles**: Refined input styles for a polished and professional look.  
+   - **Improved Responsiveness**: Optimized design for compatibility across all devices, from mobile to desktop.  
+
+3. **Text Editor Upgrade**  
+   - Switched from **react-quill** to **jodit-react** for a smoother, more robust text editing experience.  
+
+4. **Interface Improvements**  
+   - **Floating Action Button**: Added to all pages for quick access to key actions, enhancing usability.  
+   - **Logo Update**: A fresh, modern logo to represent the updated vision of BlogByte Blog.  
+
+5. **Performance Optimizations**  
+   - Reduced code redundancy for faster load times and improved application stability.  
 
 ## Demo
 
@@ -10,7 +29,7 @@ Here are some screenshots of `Admin Pages`: [Click here](https://github.com/Shai
 
 ## Features
 
-- `Admin Role`: Mange the data of website by `CRUD` Operations on Blog's, comments and users data. He can only create blog's.
+- `Admin Role`: Mange the user accounts and admin role approval.
 - `Google OAuth` / `User Authentication`: Users can sign up, log in, and manage their profiles.
 - `Create, Read, Update, Delete (CRUD)`: Full functionality to write, edit, and delete blog posts.
 - `RESTful API`: All blog and user operations are handled through RESTful API endpoints.
