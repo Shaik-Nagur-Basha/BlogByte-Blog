@@ -7,18 +7,18 @@ export default function Projects() {
   const iframeRef = useRef();
 
   const tabs = [
+    "NeoChat(Ongoing)",
     "BlogByte-Blog",
     "Listing-Hub",
-    "NeoChat(Ongoing)",
     "Spotify-Home-UI-Clone",
     "Random-Color-Generator",
     "Color-Your-Name",
     "Toggle-Sidebar-With-CSS",
   ];
   const tabContents = [
+    "https://neochat-sk.onrender.com",
     "https://blogbyte-blog.onrender.com",
     "https://listing-hub.onrender.com",
-    "https://t.me/sknba/200",
     "https://shaik-nagur-basha.github.io/Spotify-Home-UI-Clone/",
     "https://shaik-nagur-basha.github.io/Random-Color-Generator/",
     "https://shaik-nagur-basha.github.io/Color-Your-Name/",
