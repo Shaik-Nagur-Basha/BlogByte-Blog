@@ -11,22 +11,22 @@ export default function Projects() {
     "BlogByte-Blog",
     "Listing-Hub",
     "Gradient-Craft",
-    "Text-In-Image",
+    "DevMatrix",
     "Spotify-Home-UI-Clone",
-    "Random-Color",
-    "Color-Your-Name",
-    "Toggle-Sidebar-With-CSS",
+    "StellarMarket",
+    "SyncTask",
+    // "Toggle-Sidebar-With-CSS",
   ];
   const tabContents = [
     "https://neochat-sk.onrender.com",
     "https://blogbyte-blog.onrender.com",
     "https://listing-hub.onrender.com",
     "https://shaik-nagur-basha.github.io/Gradient-Craft/",
-    "https://shaik-nagur-basha.github.io/Text-In-Image/",
+    "https://shaik-nagur-basha.github.io/DevMatrix/",
     "https://shaik-nagur-basha.github.io/Spotify-Home-UI-Clone/",
-    "https://shaik-nagur-basha.github.io/Random-Color-Generator/",
-    "https://shaik-nagur-basha.github.io/Color-Your-Name/",
-    "https://shaik-nagur-basha.github.io/Toggle-Sidebar-With-CSS/",
+    "https://shaik-nagur-basha.github.io/StellarMarket/",
+    "https://shaik-nagur-basha.github.io/SyncTask/",
+    // "https://shaik-nagur-basha.github.io/Toggle-Sidebar-With-CSS/",
   ];
 
   // Function to make the iframe go fullscreen
@@ -72,9 +72,9 @@ export default function Projects() {
                   <button
                     key={index}
                     onClick={(e) => {
-                      if (e.target.innerText === "NeoChat(Ongoing)") {
-                        return (location.href = "https://t.me/sknba/200");
-                      }
+                      // if (e.target.innerText === "NeoChat(Ongoing)") {
+                      //   return (location.href = "https://t.me/sknba/200");
+                      // }
                       setActiveTab(index);
                     }}
                     className={`relative py-3 text-lg font-semibold transition-all duration-300 transform hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none ${

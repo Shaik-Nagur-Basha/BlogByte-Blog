@@ -4,6 +4,7 @@ import {
   BsFacebook,
   BsGithub,
   BsInstagram,
+  BsLinkedin,
   BsTelegram,
   BsTwitter,
 } from "react-icons/bs";
@@ -84,6 +85,12 @@ export default function FooterCom() {
             year={new Date().getFullYear()}
           />
           <div className="flex gap-6 mt-4 sm:mt-0 sm:justify-center">
+            <Footer.Icon
+              href="https://www.linkedin.com/in/nagur-basha/"
+              target="_blank"
+              rel="noopener noreferrer"
+              icon={BsLinkedin}
+            />
             <Footer.Icon
               href="https://github.com/Shaik-Nagur-Basha"
               target="_blank"
