@@ -7,9 +7,10 @@ export default function Projects() {
   const iframeRef = useRef();
 
   const tabs = [
-    "NeoChat(Ongoing)",
+    "Nagur.Dev",
     "BlogByte-Blog",
     "Listing-Hub",
+    "NeoChat",
     "Gradient-Craft",
     "DevMatrix",
     "Spotify-Home-UI-Clone",
@@ -18,9 +19,10 @@ export default function Projects() {
     // "Toggle-Sidebar-With-CSS",
   ];
   const tabContents = [
-    "https://neochat-sk.onrender.com",
+    "https://nagur-dev.onrender.com",
     "https://blogbyte-blog.onrender.com",
     "https://listing-hub.onrender.com",
+    "https://neochat-sk.onrender.com",
     "https://shaik-nagur-basha.github.io/Gradient-Craft/",
     "https://shaik-nagur-basha.github.io/DevMatrix/",
     "https://shaik-nagur-basha.github.io/Spotify-Home-UI-Clone/",
@@ -68,7 +70,7 @@ export default function Projects() {
                 </p>
               </div>
               <div className="flex space-x-6 border-transparent w-max">
-                {tabs.slice(0, 3).map((tab, index) => (
+                {tabs.slice(0, 4).map((tab, index) => (
                   <button
                     key={index}
                     onClick={(e) => {
@@ -102,7 +104,7 @@ export default function Projects() {
                 </Kbd>
               </div>
               <div className="flex space-x-6 border-b-4 border-transparent w-max">
-                {tabs.slice(3, 7).map((tab, index) => (
+                {tabs.slice(4, 8).map((tab, index) => (
                   <button
                     key={index + 3}
                     onClick={(e) => {

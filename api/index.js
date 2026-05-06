@@ -1,14 +1,17 @@
 import express from "express";
 import mongoose from "mongoose";
+import dns from "node:dns";
 import dotenv from "dotenv";
 import userRoutes from "./routes/userRoute.js";
 import authRoutes from "./routes/authRoute.js";
 import postRoutes from "./routes/postRoute.js";
 import commentRoutes from "./routes/commentRoute.js";
+import uploadRoutes from "./routes/uploadRoute.js";
 import cookieParser from "cookie-parser";
 import path from "path";
 
 dotenv.config();
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 async function main() {
   await mongoose.connect(process.env.MONGODB_URL);
@@ -37,6 +40,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/comment", commentRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 

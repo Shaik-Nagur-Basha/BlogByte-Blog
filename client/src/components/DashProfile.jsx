@@ -1,13 +1,7 @@
 import { useSelector } from "react-redux";
 import { Alert, Button, FloatingLabel } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { app } from "../firebase";
+
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -60,49 +54,40 @@ export default function DashProfile() {
   }, [imageFile]);
 
   const uploadImage = async () => {
-    // service firebase.storage {
-    //   match /b/{bucket}/o {
-    //     match /{allPaths=**} {
-    //       allow read;
-    //       allow write: if
-    //       request.resource.size < 2 * 1024 * 1024 &&
-    //       request.resource.contentType.matches('image/.*');
-    //     }
-    //   }
-    // }
-
-    // console.log('Image uploading ....');
     setImageFileUploading(true);
     setImageFileUploadError(null);
-    const storage = getStorage(app);
-    const filename = new Date().getTime() + imageFile.name;
-    const storageRef = ref(storage, filename);
-    const uploadTask = uploadBytesResumable(storageRef, imageFile);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setImageFileUploadProgress((progress.toFixed(0) * 0.92).toFixed(0));
-      },
-      (error) => {
+    setImageFileUploadProgress(10);
+    try {
+      const data = new FormData();
+      data.append("image", imageFile);
+      setImageFileUploadProgress(40);
+      const res = await fetch("/api/upload/image", {
+        method: "POST",
+        body: data,
+      });
+      setImageFileUploadProgress(80);
+      const result = await res.json();
+      if (!res.ok) {
         setImageFileUploadError(
-          "Could not upload image (File must be less than 2MB"
+          result.message || "Could not upload image (File must be less than 2MB)"
         );
         setImageFileUploadProgress(null);
         setImageFile(null);
         setImageFileUrl(null);
         setImageFileUploading(false);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-          setImageFileUrl(downloadUrl);
-          setFormData({ ...formData, profilePicture: downloadUrl });
-          setImageFileUploading(false);
-          setImageFileUploadProgress(100);
-        });
+        return;
       }
-    );
+      setImageFileUrl(result.url);
+      setFormData({ ...formData, profilePicture: result.url });
+      setImageFileUploadProgress(100);
+      setImageFileUploading(false);
+    } catch (error) {
+      setImageFileUploadError("Could not upload image (File must be less than 2MB)");
+      setImageFileUploadProgress(null);
+      setImageFile(null);
+      setImageFileUrl(null);
+      setImageFileUploading(false);
+    }
   };
 
   function handleFormChange(e) {

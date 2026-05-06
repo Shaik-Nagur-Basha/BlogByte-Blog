@@ -1,7 +1,7 @@
 {
-  "name": "client",
+  "name": "blogbyte-blog-client",
   "private": true,
-  "version": "0.0.0",
+  "version": "3.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
+    "blog": "file:..",
     "firebase": "^10.13.2",
     "flowbite-react": "^0.10.1",
     "jodit-react": "^4.1.2",

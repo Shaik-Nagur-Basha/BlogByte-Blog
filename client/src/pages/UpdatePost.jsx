@@ -7,13 +7,7 @@ import {
   Select,
   ToggleSwitch,
 } from "flowbite-react";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { app } from "../firebase.js";
+
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -74,33 +68,26 @@ export default function UpdatePost() {
       }
       setImageFileUploadProgress(null);
       setImageFileUploadError(null);
-      const storage = getStorage(app);
-      const filename = new Date().getTime() + "-" + file.name;
-      const storageRef = ref(storage, filename);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setImageFileUploadProgress(progress.toFixed(0));
-          // setImageFileUploadProgress((progress.toFixed(0) * 0.92).toFixed(0));
-        },
-        (error) => {
-          setImageFileUploadError(
-            "Could not upload image (File must be less than 2MB"
-          );
-          setImageFileUploadProgress(null);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
-            setImageFileUploadProgress(null);
-            // setImageFileUploadProgress(100);
-            setImageFileUploadError(null);
-            setFormData({ ...formData, image: downloadUrl });
-          });
-        }
-      );
+      setImageFileUploadProgress(10);
+      const data = new FormData();
+      data.append("image", file);
+      setImageFileUploadProgress(40);
+      const res = await fetch("/api/upload/image", {
+        method: "POST",
+        body: data,
+      });
+      setImageFileUploadProgress(80);
+      const result = await res.json();
+      if (!res.ok) {
+        setImageFileUploadError(
+          result.message || "Could not upload image (File must be less than 2MB)"
+        );
+        setImageFileUploadProgress(null);
+        return;
+      }
+      setImageFileUploadProgress(null);
+      setImageFileUploadError(null);
+      setFormData({ ...formData, image: result.url });
     } catch (error) {
       setImageFileUploadError("Image upload failed");
       setImageFileUploadProgress(null);
