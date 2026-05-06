@@ -106,16 +106,16 @@ export default function Projects() {
               <div className="flex space-x-6 border-b-4 border-transparent w-max">
                 {tabs.slice(4, 8).map((tab, index) => (
                   <button
-                    key={index + 3}
+                    key={index + 4}
                     onClick={(e) => {
                       if (e.target.innerText === "Spotify-Home-UI-Clone") {
                         return (location.href =
                           "https://shaik-nagur-basha.github.io/Spotify-Home-UI-Clone/");
                       }
-                      setActiveTab(index + 3);
+                      setActiveTab(index + 4);
                     }}
                     className={`relative py-3 text-lg font-semibold transition-all duration-300 transform hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none ${
-                      activeTab === index + 3
+                      activeTab === index + 4
                         ? "text-blue-600 dark:text-blue-400"
                         : "text-gray-600 dark:text-gray-300"
                     }`}
@@ -124,7 +124,7 @@ export default function Projects() {
                     {tab}
                     <span
                       className={`absolute bottom-0 left-0 w-full h-1 bg-blue-600 dark:bg-blue-400 transition-all duration-300 transform ${
-                        activeTab === index + 3 ? "scale-x-100" : "scale-x-0"
+                        activeTab === index + 4 ? "scale-x-100" : "scale-x-0"
                       } origin-bottom-left`}
                     ></span>
                   </button>
